@@ -10,7 +10,7 @@
         Title="WindowMain" Height="450" Width="800" ui:WindowHelper.UseModernWindowStyle="True">
     <DockPanel>
         <!--菜单-->
-        <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
+        <Menu DockPanel.Dock="Top" VerticalAlignment="Top" Background="#0C000000" Height="32">
             <MenuItem Header="文件">
                 <MenuItem Header="新建"/>
                 <MenuItem Header="打开"/>
@@ -24,7 +24,7 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             
