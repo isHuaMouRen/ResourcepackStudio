@@ -4,9 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RresourcepackStudio.Windows"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
-        Title="WindowMain" Height="450" Width="800">
-    <Grid>
         
-    </Grid>
+        Title="WindowMain" Height="450" Width="800" ui:WindowHelper.UseModernWindowStyle="True">
+    <DockPanel>
+        <!--菜单-->
+        <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
+            <MenuItem Header="文件">
+                <MenuItem Header="新建"/>
+                <MenuItem Header="打开"/>
+                <MenuItem Header="另存为..."/>
+                <Separator/>
+                <MenuItem Header="退出"/>
+            </MenuItem>
+        </Menu>
+
+        <!--主要区域-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!--文件浏览器-->
+            <Grid Grid.Column="0">
+            </Grid>
+
+            <!--主区域-->
+            <Grid Grid.Column="1">
+            </Grid>
+
+            <!--属性区-->
+            <Grid Grid.Column="2">
+            </Grid>
+
+            <!--滑动条-->
+            <GridSplitter Grid.Column="0" Width="2" Cursor="SizeWE"/>
+            <GridSplitter Grid.Column="1" Width="2" Cursor="SizeWE"/>
+        </Grid>
+    </DockPanel>
 </Window>
