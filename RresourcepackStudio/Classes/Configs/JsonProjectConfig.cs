@@ -14,7 +14,7 @@ namespace RresourcepackStudio.Classes.Configs
         File,
     }
 
-    public class JsonProjectFileConfig
+    public class JsonProjectConfig
     {
         public class Index
         {

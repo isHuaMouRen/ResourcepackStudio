@@ -24,7 +24,7 @@ namespace RresourcepackStudio.Windows
     public partial class WindowCreateProject : Window
     {
         public string? ProjectPath { get; set; } = null;
-        public JsonProjectFileConfig.Index? ProjectIndex { get; set; } = null;
+        public JsonProjectConfig.Index? ProjectIndex { get; set; } = null;
 
 
 
@@ -110,7 +110,7 @@ namespace RresourcepackStudio.Windows
                     var listboxItem = new ListBoxItem
                     {
                         Content = tbName.Text,
-                        Tag = new JsonProjectFileConfig.LanguageInfo { Code = tbCode.Text, Name = tbName.Text, Region = tbRegion.Text }
+                        Tag = new JsonProjectConfig.LanguageInfo { Code = tbCode.Text, Name = tbName.Text, Region = tbRegion.Text }
                     };
                     listBox_Lang.Items.Add(listboxItem);
                 }
@@ -156,20 +156,20 @@ namespace RresourcepackStudio.Windows
                 ProjectPath = textBox_Path.Text;
 
 
-                var langList = new List<JsonProjectFileConfig.LanguageInfo>();
+                var langList = new List<JsonProjectConfig.LanguageInfo>();
 
                 foreach (var item in listBox_Lang.Items)
                     if (item is ListBoxItem lbItem)
-                        langList.Add((JsonProjectFileConfig.LanguageInfo)lbItem.Tag);
+                        langList.Add((JsonProjectConfig.LanguageInfo)lbItem.Tag);
 
-                ProjectIndex = new JsonProjectFileConfig.Index
+                ProjectIndex = new JsonProjectConfig.Index
                 {
                     Name = textBox_ProjectName.Text!,
-                    PackInfo = new JsonProjectFileConfig.PackInfo
+                    PackInfo = new JsonProjectConfig.PackInfo
                     {
                         BuildName = $"{textBox_ProjectName.Text}.zip",
                         Description = textBox_Description.Text,
-                        Version = new JsonProjectFileConfig.VersionInfo
+                        Version = new JsonProjectConfig.VersionInfo
                         {
                             MinMain = (int)numBox_MinMain.Value,
                             MinSub = (int)numBox_MinSub.Value,
@@ -177,45 +177,45 @@ namespace RresourcepackStudio.Windows
                             MaxMain = (int)numBox_MaxMain.Value,
                             MaxSub = (int)numBox_MaxSub.Value
                         },
-                        Language = (langList.Count > 0) ? langList.ToArray() : new JsonProjectFileConfig.LanguageInfo[] { }
+                        Language = (langList.Count > 0) ? langList.ToArray() : new JsonProjectConfig.LanguageInfo[] { }
                     },
-                    Files = new JsonProjectFileConfig.FileInfo[]
+                    Files = new JsonProjectConfig.FileInfo[]
                     {
-                        new JsonProjectFileConfig.FileInfo
+                        new JsonProjectConfig.FileInfo
                         {
                             Name="assets",
                             Type=FileType.Directory,
-                            Children=new JsonProjectFileConfig.FileInfo[]
+                            Children=new JsonProjectConfig.FileInfo[]
                             {
-                                new JsonProjectFileConfig.FileInfo
+                                new JsonProjectConfig.FileInfo
                                 {
                                     Name="minecraft",
                                     Type=FileType.Directory,
-                                    Children=new JsonProjectFileConfig.FileInfo[]
+                                    Children=new JsonProjectConfig.FileInfo[]
                                     {
-                                        new JsonProjectFileConfig.FileInfo
+                                        new JsonProjectConfig.FileInfo
                                         {
                                             Name="lang",
                                             Type=FileType.Directory,
-                                            Children=new JsonProjectFileConfig.FileInfo[]{}
+                                            Children=new JsonProjectConfig.FileInfo[]{}
                                         },
-                                        new JsonProjectFileConfig.FileInfo
+                                        new JsonProjectConfig.FileInfo
                                         {
                                             Name="models",
                                             Type=FileType.Directory,
-                                            Children=new JsonProjectFileConfig.FileInfo[]{}
+                                            Children=new JsonProjectConfig.FileInfo[]{}
                                         },
-                                        new JsonProjectFileConfig.FileInfo
+                                        new JsonProjectConfig.FileInfo
                                         {
                                             Name="texts",
                                             Type=FileType.Directory,
-                                            Children=new JsonProjectFileConfig.FileInfo[]{}
+                                            Children=new JsonProjectConfig.FileInfo[]{}
                                         },
-                                        new JsonProjectFileConfig.FileInfo
+                                        new JsonProjectConfig.FileInfo
                                         {
                                             Name="textures",
                                             Type=FileType.Directory,
-                                            Children=new JsonProjectFileConfig.FileInfo[]{}
+                                            Children=new JsonProjectConfig.FileInfo[]{}
                                         },
                                     }
                                 }
