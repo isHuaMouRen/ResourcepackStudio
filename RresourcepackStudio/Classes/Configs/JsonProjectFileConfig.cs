@@ -41,16 +41,25 @@ namespace RresourcepackStudio.Classes.Configs
             public VersionInfo Version { get; set; } = new VersionInfo();
 
             [JsonProperty("language")]
-            public LanguageInfo[]? Language { get; set } = null;
+            public LanguageInfo[]? Language { get; set; } = null;
         }
 
         public class VersionInfo
         {
-            [JsonProperty("min")]
-            public int Min { get; set; } = 34;
-            
-            [JsonProperty("max")]
-            public int Max { get; set; } = 46;
+            [JsonProperty("min-main")]
+            public int MinMain { get; set; } = 34;
+
+            [JsonProperty("min-sub")]
+            public int MinSub { get; set; } = 0;
+
+            [JsonProperty("neutral")]
+            public int Neutral { get; set; } = 34;
+
+            [JsonProperty("max-main")]
+            public int MaxMain { get; set; } = 46;
+
+            [JsonProperty("max-sub")]
+            public int MaxSub { get; set; } = 0;
         }
 
         public class LanguageInfo
