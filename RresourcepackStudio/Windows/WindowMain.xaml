@@ -30,6 +30,7 @@
             
             <!--文件浏览器-->
             <Grid Grid.Column="0">
+                <TreeView x:Name="treeView_Main"/>
             </Grid>
 
             <!--主区域-->
