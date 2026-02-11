@@ -12,7 +12,7 @@ namespace RresourcepackStudio
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            base.OnStartup(e);
+            //base.OnStartup(e);
 
             var window = new WindowMain();
             window.Show();
