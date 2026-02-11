@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace RresourcepackStudio.Classes.Configs
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum FileType
     {
-        [JsonStringEnumMemberName("dir")]
+        [EnumMember(Value = "dir")]
         Directory,
 
-        [JsonStringEnumMemberName("file")]
+        [EnumMember(Value = "file")]
         File,
     }
 
