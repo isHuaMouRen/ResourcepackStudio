@@ -15,7 +15,6 @@
             <MenuItem Header="文件">
                 <MenuItem Header="新建" Click="MenuItem_New_Click" />
                 <MenuItem Header="打开"/>
-                <MenuItem Header="另存为..."/>
                 <Separator/>
                 <MenuItem Header="退出"/>
             </MenuItem>
