@@ -1,0 +1,86 @@
+﻿<Window x:Class="RresourcepackStudio.Windows.WindowCreateProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RresourcepackStudio.Windows"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:ctrl="clr-namespace:RresourcepackStudio.Controls"
+        mc:Ignorable="d"
+        Title="创建项目" Height="600" Width="600" ui:WindowHelper.UseModernWindowStyle="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <ctrl:UserScrollViewer Margin="0,0,0,40">
+            <StackPanel>
+                <!--项目路径-->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="项目路径*" Margin="0,0,0,5" FontSize="15" FontWeight="Bold"/>
+                    <TextBlock Text="创建项目的位置" Margin="0,0,0,5" FontSize="10" Foreground="Black"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="textBox_Path" Grid.Column="0" IsReadOnly="True" Margin="0,0,10,0"/>
+                        <Button Grid.Column="1" Content="浏览..." HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Button_Broswer_Click"/>
+                    </Grid>
+                </StackPanel>
+
+                <!--项目名称-->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="项目名称*" Margin="0,0,0,5" FontSize="15" FontWeight="Bold"/>
+                    <TextBlock Text="项目名不能包含下列任何字符: \ / : * ? &lt; &gt; |" Margin="0,0,0,5" FontSize="10" Foreground="Black"/>
+                    <TextBox x:Name="textBox_ProjectName" Text="Resourcepak Studio Project" PreviewTextInput="TextBox_PreviewTextInput"/>
+                </StackPanel>
+
+                <!--资源包描述-->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="资源包描述*" Margin="0,0,0,5" FontSize="15" FontWeight="Bold"/>
+                    <TextBlock Text="显示在资源包列表的文字，可使用§格式化代码。最多显示两行" Margin="0,0,0,5" FontSize="10" Foreground="Black"/>
+                    <TextBox x:Name="textBox_Description" Text="The resource pack built using the §n§lResourcepack Studio§r§r." AcceptsReturn="True" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <!--资源包版本-->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="资源包版本*" Margin="0,0,0,5" FontSize="15" FontWeight="Bold"/>
+                    <TextBlock Text="资源包适配的游戏版本" Margin="0,0,0,5" FontSize="10" Foreground="Black"/>
+                    <StackPanel Orientation="Horizontal" Cursor="Hand">
+                        <TextBlock Text="最小版本:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ui:NumberBox x:Name="numBox_MinMain" Minimum="1" Value="1"/>
+                        <ui:NumberBox x:Name="numBox_MinSub" Minimum="0" Value="0" Margin="0,0,20,0"/>
+
+                        <TextBlock Text="基准版本:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ui:NumberBox x:Name="numBox_Neutral" Minimum="1" Value="1" Margin="0,0,20,0"/>
+
+                        <TextBlock Text="最大版本:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ui:NumberBox x:Name="numBox_MaxMain" Minimum="1" Value="1"/>
+                        <ui:NumberBox x:Name="numBox_MaxSub" Minimum="0" Value="0" Margin="0,0,20,0"/>
+                    </StackPanel>
+                    <ui:HyperlinkButton Content="点我查看如何填写" NavigateUri="https://zh.minecraft.wiki/w/%E8%B5%84%E6%BA%90%E5%8C%85#%E8%B5%84%E6%BA%90%E5%8C%85%E6%A0%BC%E5%BC%8F%E7%89%88%E6%9C%AC"/>
+                </StackPanel>
+
+                <!--自定义语言-->
+                <StackPanel Margin="0,0,0,10">
+                    <TextBlock Text="自定义语言" Margin="0,0,0,5" FontSize="15" FontWeight="Bold"/>
+                    <TextBlock Text="添加一个自定义语言，可在 assets\minecraft\lang\&lt;语言代码&gt;.json 编辑语言文本。可选" Margin="0,0,0,5" FontSize="10" Foreground="Black"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBox x:Name="listBox_Lang" Grid.Column="0"/>
+                        <StackPanel Grid.Column="1" Margin="5">
+                            <Button Content="添加" HorizontalAlignment="Stretch" Margin="0,0,0,5" Click="Button_AddLang_Click"/>
+                            <Button Content="删除" HorizontalAlignment="Stretch" Click="Button_RemoveLang_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ctrl:UserScrollViewer>
+
+        <TextBlock Text="带*的为必填项" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Button Content="确定" Style="{DynamicResource AccentButtonStyle}" MinWidth="100" Margin="0,0,10,0" Click="Button_Done_Click"/>
+            <Button Content="取消" MinWidth="100" Click="Button_Cancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

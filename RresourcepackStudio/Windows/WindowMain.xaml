@@ -7,12 +7,12 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
         
-        Title="WindowMain" Height="450" Width="800" ui:WindowHelper.UseModernWindowStyle="True">
+        Title="WindowMain" Height="700" Width="1200" ui:WindowHelper.UseModernWindowStyle="True" WindowStartupLocation="CenterScreen">
     <DockPanel>
         <!--菜单-->
         <Menu DockPanel.Dock="Top" VerticalAlignment="Top" Background="#0C000000" Height="32">
             <MenuItem Header="文件">
-                <MenuItem Header="新建"/>
+                <MenuItem Header="新建" Click="MenuItem_New_Click" />
                 <MenuItem Header="打开"/>
                 <MenuItem Header="另存为..."/>
                 <Separator/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RresourcepackStudio.Utils.IO;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -20,6 +21,11 @@ namespace RresourcepackStudio.Windows
         public WindowMain()
         {
             InitializeComponent();
+        }
+
+        private void MenuItem_New_Click(object sender, RoutedEventArgs e)
+        {
+            ProjectManager.CreateProject();
         }
     }
 }
