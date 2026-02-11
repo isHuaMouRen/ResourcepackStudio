@@ -27,5 +27,10 @@ namespace RresourcepackStudio.Windows
         {
             ProjectManager.CreateProject();
         }
+
+        private void MenuItem_Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown(0);
+        }
     }
 }
