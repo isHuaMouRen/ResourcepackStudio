@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<Viewbox xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform" Name="Icon_Baw">
+    <Canvas UseLayoutRounding="False" Width="24.0" Height="24.0">
+        <Canvas.Clip>
+            <RectangleGeometry Rect="0.0,0.0,24.0,24.0"/>
+        </Canvas.Clip>
+        <Canvas UseLayoutRounding="False">
+            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="1.875" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
+                <Path.Data>
+                    <PathGeometry Figures="M 12 12.3 L 3.5 7.05 L 12 1.8 L 20.5 7.05 Z" FillRule="Nonzero"/>
+                </Path.Data>
+            </Path>
+            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="1.875" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
+                <Path.Data>
+                    <PathGeometry Figures="m 12 22.2 v -9.9 l 8.5 -5.25 v 9.9 z" FillRule="Nonzero"/>
+                </Path.Data>
+            </Path>
+            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="1.875" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
+                <Path.Data>
+                    <PathGeometry Figures="M 12 22.2 L 3.5 16.95 V 7.05 L 12 12.3 Z" FillRule="Nonzero"/>
+                </Path.Data>
+            </Path>
+        </Canvas>
+        <Canvas UseLayoutRounding="False">
+            <Path Opacity="0.8" Fill="#ff282828">
+                <Path.Data>
+                    <PathGeometry Figures="M 12 12.3 L 3.5 7.05 L 12 1.8 L 20.5 7.05 Z" FillRule="Nonzero"/>
+                </Path.Data>
+            </Path>
+            <Path Opacity="0.6" Fill="#ff505050">
+                <Path.Data>
+                    <PathGeometry Figures="m 12 22.2 v -9.9 l 8.5 -5.25 v 9.9 z" FillRule="Nonzero"/>
+                </Path.Data>
+            </Path>
+            <Path Opacity="0.6" Fill="#ff505050">
+                <Path.Data>
+                    <PathGeometry Figures="M 12 22.2 L 3.5 16.95 V 7.05 L 12 12.3 Z" FillRule="Nonzero"/>
+                </Path.Data>
+            </Path>
+        </Canvas>
+    </Canvas>
+</Viewbox>
