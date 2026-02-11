@@ -15,7 +15,7 @@ namespace RresourcepackStudio.Classes.Configs
         File,
     }
 
-    public class ProjectFileConfig
+    public class JsonProjectFileConfig
     {
         public class Index
         {
@@ -41,7 +41,7 @@ namespace RresourcepackStudio.Classes.Configs
             public VersionInfo Version { get; set; } = new VersionInfo();
 
             [JsonProperty("language")]
-            public LanguageInfo[]? Language = null;
+            public LanguageInfo[]? Language { get; set } = null;
         }
 
         public class VersionInfo
