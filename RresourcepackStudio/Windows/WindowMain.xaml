@@ -14,7 +14,7 @@
         <Menu VerticalAlignment="Top" Background="#0C000000" Height="32">
             <MenuItem Header="文件">
                 <MenuItem Header="新建" Click="MenuItem_New_Click" />
-                <MenuItem Header="打开"/>
+                <MenuItem Header="打开" Click="MenuItem_Open_Click"/>
                 <Separator/>
                 <MenuItem Header="退出" Click="MenuItem_Exit_Click"/>
             </MenuItem>
@@ -36,7 +36,16 @@
 
             <!--文件浏览器-->
             <Grid Grid.Column="0">
-                <TreeView x:Name="treeView_Main"/>
+                <TreeView x:Name="treeView_Main">
+                    <TreeViewItem>
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <icons:IconApplication Width="20" Height="20" Margin="0,0,5,0"/>
+                                <TextBlock Text="Project 1"/>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+                </TreeView>
             </Grid>
 
             <!--主区域-->

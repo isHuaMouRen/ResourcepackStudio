@@ -1,15 +1,7 @@
-﻿using RresourcepackStudio.Utils.IO;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RresourcepackStudio.Classes.Configs;
+using RresourcepackStudio.Utils.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace RresourcepackStudio.Windows
 {
@@ -23,14 +15,34 @@ namespace RresourcepackStudio.Windows
             InitializeComponent();
         }
 
-        private void MenuItem_New_Click(object sender, RoutedEventArgs e)
+        #region MenuItem 事件
+        
+        private void MenuItem_New_Click(object sender, RoutedEventArgs e) => ProjectManager.CreateProject();
+        private void MenuItem_Open_Click(object sender, RoutedEventArgs e) => ProjectManager.OpenProject();
+        private void MenuItem_Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown(0);
+        
+        #endregion
+
+        public void LoadTreeView(JsonProjectConfig.FileInfo root)
         {
-            ProjectManager.CreateProject();
+            var item = new TreeViewItem
+            {
+                Header = root.Name,
+                Tag = root,
+                IsExpanded = root.Type == FileType.Folder
+            };
+
+            treeView_Main.Items.Add(item);
+
+            if (root.Children != null && root.Children.Length > 0)
+            {
+                foreach (var child in root.Children)
+                {
+                    LoadTreeView(child);
+                }
+            }
         }
 
-        private void MenuItem_Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown(0);
-        }
+        public void 
     }
 }
