@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="ExecuteShell/ExecuteShell.csproj" Id="fffe52c5-f5e8-44ff-a85e-8782e325e1f7" />
   <Project Path="RresourcepackStudio/RresourcepackStudio.csproj" />
+  <Project Path="UpdateService/UpdateService.csproj" Id="51c7fc39-abee-471e-b5e5-2b15f1f543bb" />
 </Solution>
