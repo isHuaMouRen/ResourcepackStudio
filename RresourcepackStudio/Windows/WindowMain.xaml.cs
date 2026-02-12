@@ -1,4 +1,6 @@
-﻿using RresourcepackStudio.Classes;
+﻿using ModernWpf.Controls;
+using Notifications.Wpf;
+using RresourcepackStudio.Classes;
 using RresourcepackStudio.Classes.Configs;
 using RresourcepackStudio.Controls.Icons;
 using RresourcepackStudio.Utils.IO;
@@ -6,6 +8,7 @@ using RresourcepackStudio.Utils.UI;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Navigation;
 
 namespace RresourcepackStudio.Windows
 {
@@ -17,14 +20,14 @@ namespace RresourcepackStudio.Windows
         public WindowMain()
         {
             InitializeComponent();
-            Loaded += ((s,e) =>
+            Loaded += ((s, e) =>
             {
                 SetUIEnabled(false);
             });
         }
 
         #region MenuItem 事件
-        
+
         //文件
         private void MenuItem_New_Click(object sender, RoutedEventArgs e) => ProjectManager.CreateProject();
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e) => ProjectManager.OpenProject();
@@ -45,6 +48,26 @@ namespace RresourcepackStudio.Windows
 
         #region TreeView操作
 
+        //Treeview选择项更改
+        private void treeView_Main_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem)
+                return;
+
+            bool isEnabled = false;
+            if (treeView_Main.SelectedItem != null && treeViewItem.Tag != null) 
+            {
+                isEnabled = true;
+            }
+
+
+            button_NewFile.IsEnabled = isEnabled;
+            button_NewFolder.IsEnabled = isEnabled;
+
+
+        }
+
+        //加载TreeView
         public void LoadTreeView()
         {
             void AddItemFromFileInfo(JsonProjectConfig.FileInfo fileInfo, TreeViewItem root)
@@ -70,7 +93,7 @@ namespace RresourcepackStudio.Windows
 
                 root.Items.Add(item);
 
-                if (fileInfo.Children != null && fileInfo.Children.Length > 0) 
+                if (fileInfo.Children != null && fileInfo.Children.Length > 0)
                 {
                     foreach (var fileChild in fileInfo.Children)
                     {
@@ -82,7 +105,7 @@ namespace RresourcepackStudio.Windows
             try
             {
                 treeView_Main.Items.Clear();
-                button_NewFile.IsEnabled = false;button_NewFolder.IsEnabled = false;
+                button_NewFile.IsEnabled = false; button_NewFolder.IsEnabled = false;
 
                 var item = new TreeViewItem
                 {
@@ -116,38 +139,118 @@ namespace RresourcepackStudio.Windows
             }
         }
 
-        #endregion
-
-        #endregion
-
-
-
-
-
-
-        #region UI事件
-
-        //Treeview选择项更改
-        private void treeView_Main_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        //创建文件
+        private async void button_NewFile_Click(object sender, RoutedEventArgs e)
         {
-            if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem)
-                return;
-
-            bool isEnabled = false;
-            if (treeView_Main.SelectedItem != null)
+            try
             {
-                if (treeViewItem.Tag != null && treeViewItem.Tag is JsonProjectConfig.FileInfo fileInfo && fileInfo.Type != FileType.File) 
+                if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem || treeViewItem.Tag is not JsonProjectConfig.FileInfo fileInfo)
+                    return;
+
+                //文件名
+                var textBox = new TextBox
                 {
-                    isEnabled = true;
+                    Text = "新文件"
+                };
+                bool isContinue = false;
+                await DialogManager.ShowDialogAsync(new ContentDialog
+                {
+                    Title = "创建文件",
+                    Content = textBox,
+                    PrimaryButtonText = "确定",
+                    CloseButtonText = "取消",
+                    DefaultButton = ContentDialogButton.Primary
+                }, (() => isContinue = true));
+
+                if (!isContinue)
+                    return;
+
+                //无效名检测
+                if (!CharChecker.Check(textBox.Text))
+                {
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "文件无法创建",
+                        Message = "文件名包含了无效字符",
+                        Type = NotificationType.Error
+                    });
+                    return;
                 }
+
+
+                //同名检测
+                ItemCollection tempCollection;
+                if (fileInfo.Type == FileType.File)
+                    tempCollection = ((TreeViewItem)treeViewItem.Parent).Items;
+                else
+                    tempCollection = treeViewItem.Items;
+                foreach (TreeViewItem item in tempCollection)
+                {
+                    if (((JsonProjectConfig.FileInfo)item.Tag).Name == textBox.Text)
+                    {
+                        new NotificationManager().Show(new NotificationContent
+                        {
+                            Title = "文件无法创建",
+                            Message = "已有同名文件",
+                            Type = NotificationType.Error
+                        });
+                        return;
+                    }
+                }
+
+
+
+
+                var addItem = new TreeViewItem
+                {
+                    Header = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Children =
+                        {
+                            new IconFile(),
+                            new TextBlock
+                            {
+                                Text=textBox.Text,
+                                Margin=new Thickness(5,0,0,0),
+                                VerticalAlignment=VerticalAlignment.Center
+                            }
+                        }
+                    },
+                    Tag = new JsonProjectConfig.FileInfo
+                    {
+                        Name = textBox.Text,
+                        Type = FileType.File,
+                        Children = null
+                    }
+                };
+
+                if (fileInfo.Type == FileType.File)
+                    ((TreeViewItem)treeViewItem.Parent).Items.Add(addItem);
+                else
+                    treeViewItem.Items.Add(addItem);
+
             }
-
-
-            button_NewFile.IsEnabled = isEnabled;
-            button_NewFolder.IsEnabled = isEnabled;
-
-
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+            }
         }
+
+        //创建文件夹
+        private void button_NewFolder_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+            }
+        }
+
+        #endregion
 
         #endregion
     }
