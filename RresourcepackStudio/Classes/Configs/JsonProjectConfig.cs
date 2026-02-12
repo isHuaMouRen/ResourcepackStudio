@@ -7,8 +7,8 @@ namespace RresourcepackStudio.Classes.Configs
     [JsonConverter(typeof(StringEnumConverter))]
     public enum FileType
     {
-        [EnumMember(Value = "dir")]
-        Directory,
+        [EnumMember(Value = "folder")]
+        Folder,
 
         [EnumMember(Value = "file")]
         File,
