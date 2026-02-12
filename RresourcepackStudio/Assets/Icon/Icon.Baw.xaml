@@ -5,17 +5,17 @@
             <RectangleGeometry Rect="0.0,0.0,24.0,24.0"/>
         </Canvas.Clip>
         <Canvas UseLayoutRounding="False">
-            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="1.875" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
+            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="0.9375" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
                 <Path.Data>
                     <PathGeometry Figures="M 12 12.3 L 3.5 7.05 L 12 1.8 L 20.5 7.05 Z" FillRule="Nonzero"/>
                 </Path.Data>
             </Path>
-            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="1.875" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
+            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="0.9375" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
                 <Path.Data>
                     <PathGeometry Figures="m 12 22.2 v -9.9 l 8.5 -5.25 v 9.9 z" FillRule="Nonzero"/>
                 </Path.Data>
             </Path>
-            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="1.875" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
+            <Path Fill="#ffffffff" Stroke="#ff000000" StrokeLineJoin="Round" StrokeThickness="0.9375" StrokeDashCap="Round" StrokeEndLineCap="Round" StrokeStartLineCap="Round">
                 <Path.Data>
                     <PathGeometry Figures="M 12 22.2 L 3.5 16.95 V 7.05 L 12 12.3 Z" FillRule="Nonzero"/>
                 </Path.Data>
