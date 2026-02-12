@@ -88,6 +88,7 @@ namespace RresourcepackStudio.Utils.IO
 
                 window.LoadTreeView();
                 window.SetUIEnabled(true);
+                window.UpdateMenuItem();
             }
             catch (Exception ex)
             {

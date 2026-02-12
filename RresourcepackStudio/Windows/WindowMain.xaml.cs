@@ -24,6 +24,7 @@ namespace RresourcepackStudio.Windows
             Loaded += ((s, e) =>
             {
                 SetUIEnabled(false);
+                UpdateMenuItem();
             });
         }
 
@@ -48,6 +49,18 @@ namespace RresourcepackStudio.Windows
             grid_Main.Visibility = enabled ? Visibility.Visible : Visibility.Hidden;
         }
 
+        public void UpdateMenuItem()
+        {
+            if (Globals.CurrentProject == null)
+            {
+                menuItem_Save.IsEnabled = false;
+            }
+            else
+            {
+                menuItem_Save.IsEnabled = true;
+            }
+        }
+
         private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (Keyboard.Modifiers == ModifierKeys.Control)
@@ -55,10 +68,12 @@ namespace RresourcepackStudio.Windows
                 switch (e.Key)
                 {
                     case Key.Q:
-                        MenuItem_Exit_Click(null!, null!);
+                        if (menuItem_Exit.IsEnabled)
+                            MenuItem_Exit_Click(null!, null!);
                         break;
                     case Key.S:
-                        MenuItem_Save_Click(null!, null!);
+                        if (menuItem_Save.IsEnabled)
+                            MenuItem_Save_Click(null!, null!);
                         break;
                 }
             }
