@@ -5,6 +5,7 @@ using RresourcepackStudio.Utils.IO;
 using RresourcepackStudio.Utils.UI;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace RresourcepackStudio.Windows
 {
@@ -16,6 +17,10 @@ namespace RresourcepackStudio.Windows
         public WindowMain()
         {
             InitializeComponent();
+            Loaded += ((s,e) =>
+            {
+                SetUIEnabled(false);
+            });
         }
 
         #region MenuItem 事件
@@ -29,6 +34,14 @@ namespace RresourcepackStudio.Windows
         private void MenuItem_About_Click(object sender, RoutedEventArgs e) => new WindowAbout().ShowDialog();
 
         #endregion
+
+        #region UI操作
+
+        public void SetUIEnabled(bool enabled)
+        {
+            grid_Main.IsEnabled = enabled;
+            grid_Main.Visibility = enabled ? Visibility.Visible : Visibility.Hidden;
+        }
 
         #region TreeView操作
 
@@ -102,6 +115,8 @@ namespace RresourcepackStudio.Windows
                 ErrorReportDialog.Show(ex);
             }
         }
+
+        #endregion
 
         #endregion
     }
