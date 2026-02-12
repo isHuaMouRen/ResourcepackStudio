@@ -85,7 +85,7 @@ namespace RresourcepackStudio.Utils.IO
                     throw new Exception("程序主窗口无效，这通常是内部代码问题。请反馈给开发者！");
 
 
-                window.UpdateUserInterface();
+                window.LoadTreeView();
             }
             catch (Exception ex)
             {

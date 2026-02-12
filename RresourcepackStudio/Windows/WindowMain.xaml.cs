@@ -1,5 +1,8 @@
-﻿using RresourcepackStudio.Classes.Configs;
+﻿using RresourcepackStudio.Classes;
+using RresourcepackStudio.Classes.Configs;
+using RresourcepackStudio.Controls.Icons;
 using RresourcepackStudio.Utils.IO;
+using RresourcepackStudio.Utils.UI;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,29 +23,76 @@ namespace RresourcepackStudio.Windows
         private void MenuItem_New_Click(object sender, RoutedEventArgs e) => ProjectManager.CreateProject();
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e) => ProjectManager.OpenProject();
         private void MenuItem_Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown(0);
-        
+
         #endregion
 
-        public void LoadTreeView(JsonProjectConfig.FileInfo root)
+        public void LoadTreeView()
         {
-            var item = new TreeViewItem
+            void AddItemFromFileInfo(JsonProjectConfig.FileInfo fileInfo, TreeViewItem root)
             {
-                Header = root.Name,
-                Tag = root,
-                IsExpanded = root.Type == FileType.Folder
-            };
-
-            treeView_Main.Items.Add(item);
-
-            if (root.Children != null && root.Children.Length > 0)
-            {
-                foreach (var child in root.Children)
+                var item = new TreeViewItem
                 {
-                    LoadTreeView(child);
+                    Header = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Children =
+                        {
+                            fileInfo.Type==FileType.Folder?new IconFolder():new IconFile(),
+                            new TextBlock
+                            {
+                                Text=fileInfo.Name,
+                                Margin=new Thickness(5,0,0,0)
+                            }
+                        }
+                    },
+                    Tag = fileInfo
+                };
+
+                root.Items.Add(item);
+
+                if (fileInfo.Children != null && fileInfo.Children.Length > 0) 
+                {
+                    foreach (var fileChild in fileInfo.Children)
+                    {
+                        AddItemFromFileInfo(fileChild, item);
+                    }
                 }
             }
-        }
 
-        public void 
+            try
+            {
+                treeView_Main.Items.Clear();
+
+
+                var item = new TreeViewItem
+                {
+                    Header = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Children =
+                        {
+                            new IconApplication(),
+                            new TextBlock
+                            {
+                                Text=$"{Globals.CurrentProject!.Name}",
+                                Margin=new Thickness(5,0,0,0)
+                            }
+                        }
+                    }
+                };
+
+                treeView_Main.Items.Add(item);
+
+                //添加普通文件
+                if (Globals.CurrentProject.Files != null)
+                    foreach (var file in Globals.CurrentProject.Files!)
+                        AddItemFromFileInfo(file, item);
+
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+            }
+        }
     }
 }
