@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
+namespace RresourcepackStudio.Utils.UI
+{
+    public static class CharChecker
+    {
+        public static bool CheckString(string? str)
+        {
+            if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
+                return false;
+
+            foreach (var c in str)
+            {
+                if (Path.GetInvalidFileNameChars().Contains(c))
+                    return false;
+            }
+
+
+            return true;
+        }
+    }
+}
