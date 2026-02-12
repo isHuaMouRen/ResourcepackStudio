@@ -18,6 +18,9 @@
                 <Separator/>
                 <MenuItem Header="退出" Click="MenuItem_Exit_Click"/>
             </MenuItem>
+            <MenuItem Header="帮助">
+                <MenuItem Header="关于 Resourcepack Studio" Click="MenuItem_About_Click" />
+            </MenuItem>
         </Menu>
 
         <!--背景-->

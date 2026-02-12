@@ -20,11 +20,17 @@ namespace RresourcepackStudio.Windows
 
         #region MenuItem 事件
         
+        //文件
         private void MenuItem_New_Click(object sender, RoutedEventArgs e) => ProjectManager.CreateProject();
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e) => ProjectManager.OpenProject();
         private void MenuItem_Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown(0);
 
+        //帮助
+        private void MenuItem_About_Click(object sender, RoutedEventArgs e) => new WindowAbout().ShowDialog();
+
         #endregion
+
+        #region TreeView操作
 
         public void LoadTreeView()
         {
@@ -94,5 +100,7 @@ namespace RresourcepackStudio.Windows
                 ErrorReportDialog.Show(ex);
             }
         }
+
+        #endregion
     }
 }
