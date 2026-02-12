@@ -184,37 +184,37 @@ namespace RresourcepackStudio.Windows
                         new JsonProjectConfig.FileInfo
                         {
                             Name="assets",
-                            Type=FileType.Directory,
+                            Type=FileType.Folder,
                             Children=new JsonProjectConfig.FileInfo[]
                             {
                                 new JsonProjectConfig.FileInfo
                                 {
                                     Name="minecraft",
-                                    Type=FileType.Directory,
+                                    Type=FileType.Folder,
                                     Children=new JsonProjectConfig.FileInfo[]
                                     {
                                         new JsonProjectConfig.FileInfo
                                         {
                                             Name="lang",
-                                            Type=FileType.Directory,
+                                            Type=FileType.Folder,
                                             Children=new JsonProjectConfig.FileInfo[]{}
                                         },
                                         new JsonProjectConfig.FileInfo
                                         {
                                             Name="models",
-                                            Type=FileType.Directory,
+                                            Type=FileType.Folder,
                                             Children=new JsonProjectConfig.FileInfo[]{}
                                         },
                                         new JsonProjectConfig.FileInfo
                                         {
                                             Name="texts",
-                                            Type=FileType.Directory,
+                                            Type=FileType.Folder,
                                             Children=new JsonProjectConfig.FileInfo[]{}
                                         },
                                         new JsonProjectConfig.FileInfo
                                         {
                                             Name="textures",
-                                            Type=FileType.Directory,
+                                            Type=FileType.Folder,
                                             Children=new JsonProjectConfig.FileInfo[]{}
                                         },
                                     }
