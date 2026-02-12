@@ -1,4 +1,8 @@
-﻿namespace UpdateService
+﻿using System.Diagnostics;
+using System.Reflection;
+using ICSharpCode.SharpZipLib.Zip;
+
+namespace UpdateService
 {
     internal class Program
     {
@@ -31,7 +35,17 @@
                 }
 
                 Console.WriteLine("开始解压文件...");
-                ZipFile.ExtractToDirectory(updateFilePath, executePath, true);
+
+                new FastZip().ExtractZip(
+                        updateFilePath,
+                        executePath,
+                        FastZip.Overwrite.Never,
+                        null,
+                        null,
+                        null,
+                        true
+                    );
+
                 Console.WriteLine("解压完毕, 将在3秒后启动启动主程序...");
 
                 for (int i = 0; i < 3; i++)
