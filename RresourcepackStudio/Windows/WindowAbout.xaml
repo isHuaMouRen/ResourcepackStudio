@@ -25,6 +25,13 @@
                 <TextBlock Text="项目仓库" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center"/>
                 <ui:HyperlinkButton Content="isHuaMouRen/ResourcepackStudio" NavigateUri="https://github.com/isHuaMouRen/ResourcepackStudio" HorizontalAlignment="Center"/>
 
+                <TextBlock Text="依赖库" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center"/>
+                <ui:HyperlinkButton Content="Windows Presentation Foundation - UI框架" NavigateUri="https://github.com/dotnet/wpf" HorizontalAlignment="Center"/>
+                <ui:HyperlinkButton Content="ModernWpfUI (Modified) - 主UI库" NavigateUri="https://github.com/isHuaMouRen/ModernWpf" HorizontalAlignment="Center"/>
+                <ui:HyperlinkButton Content="Newtonsoft.Json - Json解析" NavigateUri="https://github.com/JamesNK/Newtonsoft.Json" HorizontalAlignment="Center"/>
+                <ui:HyperlinkButton Content="Notifications.Wpf - 通知显示" NavigateUri="https://github.com/Federerer/Notifications.Wpf" HorizontalAlignment="Center"/>
+                <ui:HyperlinkButton Content="Ookii.Dialogs.Wpf - 对话框显示" NavigateUri="https://github.com/ookii-dialogs/ookii-dialogs-wpf" HorizontalAlignment="Center"/>
+                
             </StackPanel>
         </ctrl:UserScrollViewer>
         
