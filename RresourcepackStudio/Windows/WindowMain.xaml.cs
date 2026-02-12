@@ -31,6 +31,7 @@ namespace RresourcepackStudio.Windows
         //文件
         private void MenuItem_New_Click(object sender, RoutedEventArgs e) => ProjectManager.CreateProject();
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e) => ProjectManager.OpenProject();
+        private void MenuItem_Save_Click(object sender, RoutedEventArgs e) => ProjectManager.SaveProject();
         private void MenuItem_Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown(0);
 
         //帮助
