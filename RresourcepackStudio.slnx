@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="ExecuteShell/ExecuteShell.csproj" Id="fffe52c5-f5e8-44ff-a85e-8782e325e1f7" />
   <Project Path="RresourcepackStudio/RresourcepackStudio.csproj" />
 </Solution>
