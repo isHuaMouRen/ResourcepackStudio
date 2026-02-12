@@ -7,6 +7,7 @@ using RresourcepackStudio.Utils.IO;
 using RresourcepackStudio.Utils.UI;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 
@@ -45,6 +46,22 @@ namespace RresourcepackStudio.Windows
         {
             grid_Main.IsEnabled = enabled;
             grid_Main.Visibility = enabled ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                switch (e.Key)
+                {
+                    case Key.Q:
+                        MenuItem_Exit_Click(null!, null!);
+                        break;
+                    case Key.S:
+                        MenuItem_Save_Click(null!, null!);
+                        break;
+                }
+            }
         }
 
         #region TreeView操作
@@ -338,5 +355,7 @@ namespace RresourcepackStudio.Windows
         #endregion
 
         #endregion
+
+        
     }
 }
