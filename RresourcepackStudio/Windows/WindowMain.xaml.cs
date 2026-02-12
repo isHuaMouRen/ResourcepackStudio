@@ -23,6 +23,7 @@ namespace RresourcepackStudio.Windows
             InitializeComponent();
             Loaded += ((s, e) =>
             {
+                this.Title = $"Resourcepack Studio {Globals.Version}";
                 SetUIEnabled(false);
                 UpdateMenuItem();
             });
