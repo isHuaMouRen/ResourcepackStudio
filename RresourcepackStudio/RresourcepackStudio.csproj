@@ -7,7 +7,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <NoWarn>NU1701</NoWarn>
+
+    <SatelliteResourceLanguages>none</SatelliteResourceLanguages>
+    <ExcludeAllSatelliteAssemblies>true</ExcludeAllSatelliteAssemblies>
+    
+    <ApplicationIcon>Assets\Icon\Icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Icon\Icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="ModernWpf">

@@ -8,7 +8,7 @@
         xmlns:icons="clr-namespace:RresourcepackStudio.Controls.Icons"
         mc:Ignorable="d"
         
-        Title="WindowMain" Height="700" Width="1200" MinWidth="520" MinHeight="400" ui:WindowHelper.UseModernWindowStyle="True" WindowStartupLocation="CenterScreen">
+        Title="WindowMain" Height="700" Width="1200" MinWidth="520" MinHeight="400" ui:WindowHelper.UseModernWindowStyle="True" WindowStartupLocation="CenterScreen" Icon="/Assets/Icon/Icon.ico">
     <Grid>
         <!--菜单-->
         <Menu VerticalAlignment="Top" Background="#0C000000" Height="32">
