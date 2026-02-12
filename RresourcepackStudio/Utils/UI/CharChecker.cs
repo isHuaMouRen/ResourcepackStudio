@@ -7,7 +7,7 @@ namespace RresourcepackStudio.Utils.UI
 {
     public static class CharChecker
     {
-        public static bool CheckString(string? str)
+        public static bool Check(string? str)
         {
             if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
                 return false;
