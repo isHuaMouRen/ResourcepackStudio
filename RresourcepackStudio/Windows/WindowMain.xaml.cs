@@ -47,7 +47,8 @@ namespace RresourcepackStudio.Windows
                             new TextBlock
                             {
                                 Text=fileInfo.Name,
-                                Margin=new Thickness(5,0,0,0)
+                                Margin=new Thickness(5,0,0,0),
+                                VerticalAlignment=VerticalAlignment.Center
                             }
                         }
                     },
@@ -81,7 +82,8 @@ namespace RresourcepackStudio.Windows
                             new TextBlock
                             {
                                 Text=$"{Globals.CurrentProject!.Name}",
-                                Margin=new Thickness(5,0,0,0)
+                                Margin=new Thickness(5,0,0,0),
+                                VerticalAlignment=VerticalAlignment.Center
                             }
                         }
                     }
