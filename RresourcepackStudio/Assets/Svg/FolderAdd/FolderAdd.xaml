@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<Viewbox xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform" Name="FolderAdd">
+    <Canvas UseLayoutRounding="False" Width="24.0" Height="24.0">
+        <Canvas.Clip>
+            <RectangleGeometry Rect="0.0,0.0,24.0,24.0"/>
+        </Canvas.Clip>
+        <Path Fill="#ff666666">
+            <Path.Data>
+                <PathGeometry Figures="M 13 19 c 0 0.34 0.04 0.67 0.09 1 H 4 a 2 2 0 0 1 -2 -2 V 6 c 0 -1.11 0.89 -2 2 -2 h 6 l 2 2 h 8 a 2 2 0 0 1 2 2 v 5.81 c -0.88 -0.51 -1.9 -0.81 -3 -0.81 c -3.31 0 -6 2.69 -6 6 m 7 -1 v -3 h -2 v 3 h -3 v 2 h 3 v 3 h 2 v -3 h 3 v -2 z" FillRule="Nonzero"/>
+            </Path.Data>
+        </Path>
+    </Canvas>
+</Viewbox>

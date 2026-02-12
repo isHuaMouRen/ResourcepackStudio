@@ -30,7 +30,7 @@
         </Grid>
 
         <!--主要区域-->
-        <Grid Margin="0,32,0,0">
+        <Grid x:Name="grid_Main" Margin="0,32,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -39,7 +39,15 @@
 
             <!--文件浏览器-->
             <Grid Grid.Column="0">
-                <TreeView x:Name="treeView_Main"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5">
+                    <Button BorderBrush="{x:Null}">
+                        <icons:IconFileAdd Width="20" Height="20"/>
+                    </Button>
+                    <Button BorderBrush="{x:Null}">
+                        <icons:IconFolderAdd Width="20" Height="20"/>
+                    </Button>
+                </StackPanel>
+                <TreeView x:Name="treeView_Main" Margin="0,40,0,0"/>
             </Grid>
 
             <!--主区域-->
