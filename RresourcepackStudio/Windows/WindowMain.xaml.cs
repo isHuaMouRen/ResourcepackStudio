@@ -238,11 +238,95 @@ namespace RresourcepackStudio.Windows
         }
 
         //创建文件夹
-        private void button_NewFolder_Click(object sender, RoutedEventArgs e)
+        private async void button_NewFolder_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem || treeViewItem.Tag is not JsonProjectConfig.FileInfo fileInfo)
+                    return;
 
+                //文件名
+                var textBox = new TextBox
+                {
+                    Text = "新文件夹"
+                };
+                bool isContinue = false;
+                await DialogManager.ShowDialogAsync(new ContentDialog
+                {
+                    Title = "创建文件夹",
+                    Content = textBox,
+                    PrimaryButtonText = "确定",
+                    CloseButtonText = "取消",
+                    DefaultButton = ContentDialogButton.Primary
+                }, (() => isContinue = true));
+
+                if (!isContinue)
+                    return;
+
+                //无效名检测
+                if (!CharChecker.Check(textBox.Text))
+                {
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "文件夹无法创建",
+                        Message = "文件夹名包含了无效字符",
+                        Type = NotificationType.Error
+                    });
+                    return;
+                }
+
+
+                //同名检测
+                ItemCollection tempCollection;
+                if (fileInfo.Type == FileType.File)
+                    tempCollection = ((TreeViewItem)treeViewItem.Parent).Items;
+                else
+                    tempCollection = treeViewItem.Items;
+                foreach (TreeViewItem item in tempCollection)
+                {
+                    if (((JsonProjectConfig.FileInfo)item.Tag).Name == textBox.Text)
+                    {
+                        new NotificationManager().Show(new NotificationContent
+                        {
+                            Title = "文件夹无法创建",
+                            Message = "已有同名文件夹",
+                            Type = NotificationType.Error
+                        });
+                        return;
+                    }
+                }
+
+
+
+
+                var addItem = new TreeViewItem
+                {
+                    Header = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Children =
+                        {
+                            new IconFolder(),
+                            new TextBlock
+                            {
+                                Text=textBox.Text,
+                                Margin=new Thickness(5,0,0,0),
+                                VerticalAlignment=VerticalAlignment.Center
+                            }
+                        }
+                    },
+                    Tag = new JsonProjectConfig.FileInfo
+                    {
+                        Name = textBox.Text,
+                        Type = FileType.Folder,
+                        Children = null
+                    }
+                };
+
+                if (fileInfo.Type == FileType.File)
+                    ((TreeViewItem)treeViewItem.Parent).Items.Add(addItem);
+                else
+                    treeViewItem.Items.Add(addItem);
             }
             catch (Exception ex)
             {
