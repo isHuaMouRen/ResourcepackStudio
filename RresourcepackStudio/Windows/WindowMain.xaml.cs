@@ -82,7 +82,7 @@ namespace RresourcepackStudio.Windows
             try
             {
                 treeView_Main.Items.Clear();
-
+                button_NewFile.IsEnabled = false;button_NewFolder.IsEnabled = false;
 
                 var item = new TreeViewItem
                 {
@@ -117,6 +117,37 @@ namespace RresourcepackStudio.Windows
         }
 
         #endregion
+
+        #endregion
+
+
+
+
+
+
+        #region UI事件
+
+        //Treeview选择项更改
+        private void treeView_Main_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem)
+                return;
+
+            bool isEnabled = false;
+            if (treeView_Main.SelectedItem != null)
+            {
+                if (treeViewItem.Tag != null && treeViewItem.Tag is JsonProjectConfig.FileInfo fileInfo && fileInfo.Type != FileType.File) 
+                {
+                    isEnabled = true;
+                }
+            }
+
+
+            button_NewFile.IsEnabled = isEnabled;
+            button_NewFolder.IsEnabled = isEnabled;
+
+
+        }
 
         #endregion
     }
