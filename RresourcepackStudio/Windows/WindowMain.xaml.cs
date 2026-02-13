@@ -18,6 +18,10 @@ namespace RresourcepackStudio.Windows
     /// </summary>
     public partial class WindowMain : Window
     {
+        public ContextMenu treeViewItemContextMenu = new ContextMenu();
+
+
+
         public WindowMain()
         {
             InitializeComponent();
@@ -26,8 +30,34 @@ namespace RresourcepackStudio.Windows
                 this.Title = $"Resourcepack Studio {Globals.Version}";
                 SetUIEnabled(false);
                 UpdateMenuItem();
+
+
+
+                //创建ContextMenu
+                treeViewItemContextMenu.Items.Add(new MenuItem
+                {
+                    Header = "新建",
+                    Items =
+                    {
+                        CreateMenuItem("新建文件",MenuItem_CM_NewFile_Click),
+                        CreateMenuItem("新建文件夹",MenuItem_CM_NewFolder_Click)
+                    }
+                });
+                treeViewItemContextMenu.Items.Add(CreateMenuItem("重命名", null!));//重命名还没写好，暂时空
             });
         }
+
+        private MenuItem CreateMenuItem(string header,RoutedEventHandler handler)
+        {
+            var item = new MenuItem
+            {
+                Header = header
+            };
+            if (handler != null)
+                item.Click += handler;
+            return item;
+        }
+
 
         #region MenuItem 事件
 
@@ -40,6 +70,10 @@ namespace RresourcepackStudio.Windows
         //帮助
         private void MenuItem_About_Click(object sender, RoutedEventArgs e) => new WindowAbout().ShowDialog();
 
+
+        //右键菜单
+        private void MenuItem_CM_NewFile_Click(object sender, RoutedEventArgs e) => button_NewFile_Click(button_NewFile, null!);
+        private void MenuItem_CM_NewFolder_Click(object sender, RoutedEventArgs e) => button_NewFolder_Click(button_NewFolder, null!);
         #endregion
 
         #region UI操作

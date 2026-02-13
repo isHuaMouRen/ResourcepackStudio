@@ -2,9 +2,7 @@
 using RresourcepackStudio.Classes;
 using RresourcepackStudio.Classes.Configs;
 using RresourcepackStudio.Controls.Icons;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using RresourcepackStudio.Windows;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,6 +16,9 @@ namespace RresourcepackStudio.Utils.UI
         /// <param name="treeView">要加载到的TreeView</param>
         public static void LoadTreeView(TreeView treeView)
         {
+            var window = (WindowMain)Application.Current.MainWindow;
+
+
             //遍历添加
             void AddItemFromFileInfo(JsonProjectConfig.FileInfo fileInfo, TreeViewItem root)
             {
@@ -38,8 +39,10 @@ namespace RresourcepackStudio.Utils.UI
                             }
                         }
                     },
-                    Tag = fileInfo
+                    Tag = fileInfo,
+                    ContextMenu = window.treeViewItemContextMenu
                 };
+                item.PreviewMouseRightButtonDown += ((s, e) => ((TreeViewItem)s).IsSelected = true);
 
                 root.Items.Add(item);
 
@@ -164,6 +167,7 @@ namespace RresourcepackStudio.Utils.UI
         public static void NewFile(string fileName, TreeViewItem rootItem)
         {
             var rootFileInfo = (JsonProjectConfig.FileInfo)rootItem.Tag;
+            var windowMain = (WindowMain)Application.Current.MainWindow;
 
             //无效名检测
             if (!CharChecker.Check(fileName))
@@ -219,8 +223,10 @@ namespace RresourcepackStudio.Utils.UI
                     Name = fileName,
                     Type = FileType.File,
                     Children = null
-                }
+                },
+                ContextMenu = windowMain.treeViewItemContextMenu
             };
+            addItem.PreviewMouseRightButtonDown += ((s, e) => ((TreeViewItem)s).IsSelected = true);
 
             if (rootFileInfo.Type == FileType.File)
                 ((TreeViewItem)rootItem.Parent).Items.Add(addItem);
@@ -236,6 +242,7 @@ namespace RresourcepackStudio.Utils.UI
         public static void NewFolder(string folderName, TreeViewItem rootItem)
         {
             var rootFileInfo = (JsonProjectConfig.FileInfo)rootItem.Tag;
+            var windowMain = (WindowMain)Application.Current.MainWindow;
 
             //无效名检测
             if (!CharChecker.Check(folderName))
@@ -291,8 +298,10 @@ namespace RresourcepackStudio.Utils.UI
                     Name = folderName,
                     Type = FileType.Folder,
                     Children = null
-                }
+                },
+                ContextMenu = windowMain.treeViewItemContextMenu
             };
+            addItem.PreviewMouseRightButtonDown += ((s, e) => ((TreeViewItem)s).IsSelected = true);
 
             if (rootFileInfo.Type == FileType.File)
                 ((TreeViewItem)rootItem.Parent).Items.Add(addItem);
