@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using RresourcepackStudio.Classes;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace RresourcepackStudio.Utils.IO
 {
@@ -99,67 +100,12 @@ namespace RresourcepackStudio.Utils.IO
 
         public static void SaveProject()
         {
-            JsonProjectConfig.FileInfo AddFileInfoFromTreeView(TreeViewItem treeViewItem, JsonProjectConfig.FileInfo original)
-            {
-                var node = new JsonProjectConfig.FileInfo
-                {
-                    Name = original.Name,
-                    Type = original.Type
-                };
-
-                if (node.Type == FileType.Folder && treeViewItem.HasItems)
-                {
-                    var children = new List<JsonProjectConfig.FileInfo>();
-
-                    foreach (TreeViewItem childItem in treeViewItem.Items)
-                    {
-                        if(childItem.Tag is JsonProjectConfig.FileInfo childOrigin)
-                        {
-                            var childNode = AddFileInfoFromTreeView(childItem, childOrigin);
-                            if (childNode != null)
-                            {
-                                children.Add(childNode);
-                            }
-                        }
-                    }
-
-                    if (children.Count > 0)
-                    {
-                        node.Children = children.ToArray();
-                    }
-                    else
-                    {
-                        node.Children = null;
-                    }
-
-                }
-                else
-                {
-                    node.Children = null;
-                }
-
-                return node;
-            }
-
-
             try
             {
                 var treeView = ((WindowMain)Application.Current.MainWindow).treeView_Main;
 
-
-                var result = new List<JsonProjectConfig.FileInfo>();
                 //根据TreeView反序列化FIleINfo
-                foreach (TreeViewItem item in ((TreeViewItem)treeView.Items[0]).Items)
-                {
-                    if(item.Tag is JsonProjectConfig.FileInfo fileInfo)
-                    {
-                        var cloned = AddFileInfoFromTreeView(item, fileInfo);
-                        if (cloned != null)
-                            result.Add(cloned);
-                    }
-                }
-
-                Globals.CurrentProject!.Files = result.ToArray();
+                Globals.CurrentProject!.Files = FileManager.ParseTreeviewToFileInfoArray(treeView);
                 JsonHelper.WriteJson(Path.Combine(Globals.CurrentProjectDirectory!, $"{Globals.CurrentProject.Name}.rpsp"), Globals.CurrentProject);
 
                 new NotificationManager().Show(new NotificationContent

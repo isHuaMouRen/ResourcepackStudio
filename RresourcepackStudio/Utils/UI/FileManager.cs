@@ -91,6 +91,72 @@ namespace RresourcepackStudio.Utils.UI
         }
 
         /// <summary>
+        /// 将TreeView解析为FileInfo[]
+        /// </summary>
+        /// <param name="treeView">要解析的TreeView</param>
+        /// <returns>解析后的FileInfo[]</returns>
+        public static JsonProjectConfig.FileInfo[] ParseTreeviewToFileInfoArray(TreeView treeView)
+        {
+            JsonProjectConfig.FileInfo AddFileInfoFromTreeView(TreeViewItem treeViewItem, JsonProjectConfig.FileInfo original)
+            {
+                var node = new JsonProjectConfig.FileInfo
+                {
+                    Name = original.Name,
+                    Type = original.Type
+                };
+
+                if (node.Type == FileType.Folder && treeViewItem.HasItems)
+                {
+                    var children = new List<JsonProjectConfig.FileInfo>();
+
+                    foreach (TreeViewItem childItem in treeViewItem.Items)
+                    {
+                        if (childItem.Tag is JsonProjectConfig.FileInfo childOrigin)
+                        {
+                            var childNode = AddFileInfoFromTreeView(childItem, childOrigin);
+                            if (childNode != null)
+                            {
+                                children.Add(childNode);
+                            }
+                        }
+                    }
+
+                    if (children.Count > 0)
+                    {
+                        node.Children = children.ToArray();
+                    }
+                    else
+                    {
+                        node.Children = null;
+                    }
+
+                }
+                else
+                {
+                    node.Children = null;
+                }
+
+                return node;
+            }
+
+            //=============
+
+            var result = new List<JsonProjectConfig.FileInfo>();
+
+            foreach (TreeViewItem item in ((TreeViewItem)treeView.Items[0]).Items)
+            {
+                if (item.Tag is JsonProjectConfig.FileInfo fileInfo)
+                {
+                    var cloned = AddFileInfoFromTreeView(item, fileInfo);
+                    if (cloned != null)
+                        result.Add(cloned);
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        /// <summary>
         /// 创建文件，带无效/同名检测，无需手动检测
         /// </summary>
         /// <param name="fileName">文件名</param>
