@@ -44,6 +44,7 @@ namespace RresourcepackStudio.Windows
                     }
                 });
                 treeViewItemContextMenu.Items.Add(CreateMenuItem("重命名", MenuItem_CM_Rename_Click));
+                treeViewItemContextMenu.Items.Add(CreateMenuItem("删除", MenuItem_CM_Delete_Click));
             });
         }
 
@@ -106,6 +107,33 @@ namespace RresourcepackStudio.Windows
                 ErrorReportDialog.Show(ex);
             }
         }
+        private async void MenuItem_CM_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem)
+                    return;
+
+                bool isContinue = false;
+                await DialogManager.ShowDialogAsync(new ContentDialog
+                {
+                    Title = "确定要删除吗?",
+                    PrimaryButtonText = "确定",
+                    CloseButtonText = "取消",
+                    DefaultButton = ContentDialogButton.Primary
+                }, (() => isContinue = true));
+
+                if (!isContinue)
+                    return;
+
+                FileManager.DeleteItem(treeViewItem);
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+            }
+        }
+        
         #endregion
 
         #region UI操作

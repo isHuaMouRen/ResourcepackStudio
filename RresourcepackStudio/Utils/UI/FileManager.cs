@@ -385,5 +385,16 @@ namespace RresourcepackStudio.Utils.UI
 
         }
 
+        /// <summary>
+        /// 删除项
+        /// </summary>
+        /// <param name="targetItem">目标项</param>
+        public static void DeleteItem(TreeViewItem targetItem)
+        {
+            if (targetItem.Parent is not TreeViewItem parentItem)
+                return;
+
+            parentItem.Items.Remove(targetItem);
+        }
     }
 }
