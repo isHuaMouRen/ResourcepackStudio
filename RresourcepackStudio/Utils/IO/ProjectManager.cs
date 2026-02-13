@@ -26,8 +26,13 @@ namespace RresourcepackStudio.Utils.IO
 
                 if (!Directory.Exists(window.ProjectPath))
                     Directory.CreateDirectory(window.ProjectPath!);
-
+                
+                //写Json
                 JsonHelper.WriteJson(Path.Combine(window.ProjectPath!, $"{window.ProjectIndex!.Name}.rpsp"), window.ProjectIndex!);
+
+                //初始化文件系统
+                SetupFileSystem(window.ProjectPath!, window.ProjectIndex.Files!);
+
 
                 new NotificationManager().Show(new NotificationContent
                 {
@@ -119,6 +124,46 @@ namespace RresourcepackStudio.Utils.IO
                     Type = NotificationType.Success
                 });
 
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+            }
+        }
+
+
+        public static void SetupFileSystem(string rootPath, JsonProjectConfig.FileInfo[] rootInfo)
+        {
+            void AddFileFromFileInfo(string path, JsonProjectConfig.FileInfo fileInfo)
+            {
+                if (fileInfo.Type != FileType.Folder)
+                    return;
+                
+                var targetPath = Path.Combine(path, fileInfo.Name);
+                Directory.CreateDirectory(targetPath);
+
+                if(fileInfo.Children!=null && fileInfo.Children.Length > 0)
+                {
+                    foreach (var chilren in fileInfo.Children)
+                    {
+                        AddFileFromFileInfo(targetPath, chilren);
+                    }
+                }
+            }
+
+
+
+            try
+            {
+                var rootDirectory = Path.Combine(rootPath, "files");
+
+                foreach (var item in rootInfo)
+                {
+                    AddFileFromFileInfo(rootDirectory, item);
+                }
+
+
+                return;
             }
             catch (Exception ex)
             {
