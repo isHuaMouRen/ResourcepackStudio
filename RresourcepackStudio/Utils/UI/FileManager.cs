@@ -277,7 +277,7 @@ namespace RresourcepackStudio.Utils.UI
                     Orientation = Orientation.Horizontal,
                     Children =
                         {
-                            new IconFile(),
+                            new IconFolder(),
                             new TextBlock
                             {
                                 Text=folderName,
@@ -289,7 +289,7 @@ namespace RresourcepackStudio.Utils.UI
                 Tag = new JsonProjectConfig.FileInfo
                 {
                     Name = folderName,
-                    Type = FileType.File,
+                    Type = FileType.Folder,
                     Children = null
                 }
             };
