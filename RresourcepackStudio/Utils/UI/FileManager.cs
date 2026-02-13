@@ -309,5 +309,81 @@ namespace RresourcepackStudio.Utils.UI
                 rootItem.Items.Add(addItem);
         }
 
+        /// <summary>
+        /// 重命名项，带无效/同名检测
+        /// </summary>
+        /// <param name="newName">新名字</param>
+        /// <param name="targetItem">目标名字</param>
+        public static void RenameItem(string newName,TreeViewItem targetItem)
+        {
+            var targetItemInfo = (JsonProjectConfig.FileInfo)targetItem.Tag;
+
+
+            //无效名检测
+            if (!CharChecker.Check(newName))
+            {
+                new NotificationManager().Show(new NotificationContent
+                {
+                    Title = "无法重命名",
+                    Message = $"\"{newName}\" 包含了无效字符",
+                    Type = NotificationType.Error
+                });
+                return;
+            }
+
+
+            //同名检测
+            ItemCollection tempCollection;
+            if (targetItemInfo.Type == FileType.File)
+                tempCollection = ((TreeViewItem)targetItem.Parent).Items;
+            else
+                tempCollection = targetItem.Items;
+            foreach (TreeViewItem item in tempCollection)
+            {
+                if (((JsonProjectConfig.FileInfo)item.Tag).Name == newName)
+                {
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "无法重命名",
+                        Message = "已有同名项",
+                        Type = NotificationType.Error
+                    });
+                    return;
+                }
+            }
+
+            //重命名
+            targetItem.Header = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                Children =
+                    {
+                        targetItemInfo.Type==FileType.File?new IconFile():new IconFolder(),
+                        new TextBlock
+                        {
+                            Text=newName,
+                            Margin=new Thickness(5,0,0,0),
+                            VerticalAlignment=VerticalAlignment.Center
+                        }
+                    }
+            };
+            targetItem.Tag = new JsonProjectConfig.FileInfo
+            {
+                Name = newName,
+                Type = targetItemInfo.Type,
+                Children = targetItemInfo.Children
+            };
+
+
+            new NotificationManager().Show(new NotificationContent
+            {
+                Title = "重命名成功",
+                Message = $"已重命名为 \"{newName}\"",
+                Type = NotificationType.Success
+            });
+            return;
+
+        }
+
     }
 }

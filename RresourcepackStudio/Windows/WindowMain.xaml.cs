@@ -43,7 +43,7 @@ namespace RresourcepackStudio.Windows
                         CreateMenuItem("新建文件夹",MenuItem_CM_NewFolder_Click)
                     }
                 });
-                treeViewItemContextMenu.Items.Add(CreateMenuItem("重命名", null!));//重命名还没写好，暂时空
+                treeViewItemContextMenu.Items.Add(CreateMenuItem("重命名", MenuItem_CM_Rename_Click));
             });
         }
 
@@ -74,6 +74,38 @@ namespace RresourcepackStudio.Windows
         //右键菜单
         private void MenuItem_CM_NewFile_Click(object sender, RoutedEventArgs e) => button_NewFile_Click(button_NewFile, null!);
         private void MenuItem_CM_NewFolder_Click(object sender, RoutedEventArgs e) => button_NewFolder_Click(button_NewFolder, null!);
+        private async void MenuItem_CM_Rename_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is not MenuItem menuItem || treeView_Main.SelectedItem is not TreeViewItem treeviewItem) 
+                    return;
+
+                bool isContinue = false;
+                var textBox = new TextBox
+                {
+                    Text = ((JsonProjectConfig.FileInfo)treeviewItem.Tag).Name
+                };
+                await DialogManager.ShowDialogAsync(new ContentDialog
+                {
+                    Title = "重命名",
+                    Content = textBox,
+                    PrimaryButtonText = "确定",
+                    CloseButtonText = "取消",
+                    DefaultButton = ContentDialogButton.Primary
+                }, (() => isContinue = true));
+
+                if (!isContinue)
+                    return;
+
+
+                FileManager.RenameItem(textBox.Text, treeviewItem);
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+            }
+        }
         #endregion
 
         #region UI操作
