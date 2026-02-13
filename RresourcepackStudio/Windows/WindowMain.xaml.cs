@@ -77,61 +77,11 @@ namespace RresourcepackStudio.Windows
         private void MenuItem_CM_NewFolder_Click(object sender, RoutedEventArgs e) => button_NewFolder_Click(button_NewFolder, null!);
         private async void MenuItem_CM_Rename_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (sender is not MenuItem menuItem || treeView_Main.SelectedItem is not TreeViewItem treeviewItem) 
-                    return;
-
-                bool isContinue = false;
-                var textBox = new TextBox
-                {
-                    Text = ((JsonProjectConfig.FileInfo)treeviewItem.Tag).Name
-                };
-                await DialogManager.ShowDialogAsync(new ContentDialog
-                {
-                    Title = "重命名",
-                    Content = textBox,
-                    PrimaryButtonText = "确定",
-                    CloseButtonText = "取消",
-                    DefaultButton = ContentDialogButton.Primary
-                }, (() => isContinue = true));
-
-                if (!isContinue)
-                    return;
-
-
-                FileManager.RenameItem(textBox.Text, treeviewItem);
-            }
-            catch (Exception ex)
-            {
-                ErrorReportDialog.Show(ex);
-            }
+            
         }
         private async void MenuItem_CM_Delete_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem)
-                    return;
-
-                bool isContinue = false;
-                await DialogManager.ShowDialogAsync(new ContentDialog
-                {
-                    Title = "确定要删除吗?",
-                    PrimaryButtonText = "确定",
-                    CloseButtonText = "取消",
-                    DefaultButton = ContentDialogButton.Primary
-                }, (() => isContinue = true));
-
-                if (!isContinue)
-                    return;
-
-                FileManager.DeleteItem(treeViewItem);
-            }
-            catch (Exception ex)
-            {
-                ErrorReportDialog.Show(ex);
-            }
+            
         }
         
         #endregion
@@ -179,88 +129,19 @@ namespace RresourcepackStudio.Windows
         //Treeview选择项更改
         private void treeView_Main_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem)
-                return;
-
-            bool isEnabled = false;
-            if (treeView_Main.SelectedItem != null && treeViewItem.Tag != null) 
-            {
-                isEnabled = true;
-            }
-
-
-            button_NewFile.IsEnabled = isEnabled;
-            button_NewFolder.IsEnabled = isEnabled;
-
-
+            
         }
 
         //创建文件
         private async void button_NewFile_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem || treeViewItem.Tag is not JsonProjectConfig.FileInfo fileInfo)
-                    return;
-
-                //文件名
-                var textBox = new TextBox
-                {
-                    Text = "新文件"
-                };
-                bool isContinue = false;
-                await DialogManager.ShowDialogAsync(new ContentDialog
-                {
-                    Title = "创建文件",
-                    Content = textBox,
-                    PrimaryButtonText = "确定",
-                    CloseButtonText = "取消",
-                    DefaultButton = ContentDialogButton.Primary
-                }, (() => isContinue = true));
-
-                if (!isContinue)
-                    return;
-
-                FileManager.NewFile(textBox.Text, treeViewItem);
-            }
-            catch (Exception ex)
-            {
-                ErrorReportDialog.Show(ex);
-            }
+            
         }
 
         //创建文件夹
         private async void button_NewFolder_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (treeView_Main.SelectedItem is not TreeViewItem treeViewItem || treeViewItem.Tag is not JsonProjectConfig.FileInfo fileInfo)
-                    return;
-
-                //文件名
-                var textBox = new TextBox
-                {
-                    Text = "新文件夹"
-                };
-                bool isContinue = false;
-                await DialogManager.ShowDialogAsync(new ContentDialog
-                {
-                    Title = "创建文件夹",
-                    Content = textBox,
-                    PrimaryButtonText = "确定",
-                    CloseButtonText = "取消",
-                    DefaultButton = ContentDialogButton.Primary
-                }, (() => isContinue = true));
-
-                if (!isContinue)
-                    return;
-
-                FileManager.NewFolder(textBox.Text, treeViewItem);
-            }
-            catch (Exception ex)
-            {
-                ErrorReportDialog.Show(ex);
-            }
+            
         }
 
         #endregion

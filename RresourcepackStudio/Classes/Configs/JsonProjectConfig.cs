@@ -23,9 +23,6 @@ namespace RresourcepackStudio.Classes.Configs
 
             [JsonProperty("pack-info")]
             public PackInfo PackInfo { get; set; } = new PackInfo();
-
-            [JsonProperty("files")]
-            public FileInfo[]? Files { get; set; } = null;
         }
 
         public class PackInfo
@@ -72,18 +69,6 @@ namespace RresourcepackStudio.Classes.Configs
             [JsonProperty("region")]
             public string Region { get; set; } = "中国大陆";
 
-        }
-
-        public class FileInfo
-        {
-            [JsonProperty("name")]
-            public string Name { get; set; } = "New File";
-
-            [JsonProperty("type")]
-            public FileType Type { get; set; } = FileType.File;
-
-            [JsonProperty("children")]
-            public FileInfo[]? Children = null;
         }
     }
 }
