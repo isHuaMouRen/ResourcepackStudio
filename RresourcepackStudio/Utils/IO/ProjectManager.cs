@@ -27,6 +27,19 @@ namespace RresourcepackStudio.Utils.IO
 
                 JsonHelper.WriteJson(Path.Combine(window.ProjectPath!, $"{window.ProjectConfig!.Name}.rpsp"), window.ProjectConfig);
 
+                //创建基础文件夹
+                /*
+                 assets
+                    minecraft
+                        lang
+                        models
+                        texts
+                        textures
+                 */
+
+
+
+
                 new NotificationManager().Show(new NotificationContent
                 {
                     Title = "项目创建成功",
@@ -45,23 +58,16 @@ namespace RresourcepackStudio.Utils.IO
 			}
         }
 
-        public static void OpenProject()
-        {
-            try
-            {
-                
-            }
-            catch (Exception ex)
-            {
-                ErrorReportDialog.Show(ex);
-            }
-        }
-
         public static void LoadProject()
         {
             try
             {
-                
+                var window = (WindowMain)Application.Current.MainWindow;
+
+                FileManager.LoadTreeView(window.treeView_Main);
+                window.button_NewFile.IsEnabled = false;window.button_NewFolder.IsEnabled = false;
+                window.SetUIEnabled(true);
+                window.UpdateMenuItem();
             }
             catch (Exception ex)
             {

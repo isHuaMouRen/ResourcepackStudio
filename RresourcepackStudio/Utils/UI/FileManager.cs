@@ -16,7 +16,28 @@ namespace RresourcepackStudio.Utils.UI
         /// <param name="treeView">要加载到的TreeView</param>
         public static void LoadTreeView(TreeView treeView)
         {
-            
+            treeView.Items.Clear();
+
+            var headerItem = new TreeViewItem
+            {
+                Header = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Children =
+                    {
+                        new IconApplication(),
+                        new TextBlock
+                        {
+                            Text=$"{Globals.CurrentProject!.Name}",
+                            Margin=new Thickness(5,0,0,0),
+                            VerticalAlignment=VerticalAlignment.Center
+                        }
+                    }
+                }
+            };
+            treeView.Items.Add(headerItem);
+
+
         }
 
         /// <summary>
