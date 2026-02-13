@@ -17,7 +17,27 @@ namespace RresourcepackStudio.Utils.IO
         {
 			try
 			{
-                
+                var window = new WindowCreateProject();
+                if (window.ShowDialog() != true)
+                    return;
+
+
+                if (!Directory.Exists(window.ProjectPath))
+                    Directory.CreateDirectory(window.ProjectPath!);
+
+                JsonHelper.WriteJson(Path.Combine(window.ProjectPath!, $"{window.ProjectConfig!.Name}.rpsp"), window.ProjectConfig);
+
+                new NotificationManager().Show(new NotificationContent
+                {
+                    Title = "项目创建成功",
+                    Message = $"已在 \"{window.ProjectPath}\" 处创建项目 \"{window.ProjectConfig.Name}\"",
+                    Type = NotificationType.Success
+                });
+
+                Globals.CurrentProject = window.ProjectConfig;
+                Globals.CurrentProjectDirectory = window.ProjectPath;
+
+                LoadProject();
 			}
 			catch (Exception ex)
 			{

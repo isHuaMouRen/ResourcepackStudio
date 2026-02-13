@@ -24,7 +24,7 @@ namespace RresourcepackStudio.Windows
     public partial class WindowCreateProject : Window
     {
         public string? ProjectPath { get; set; } = null;
-        public JsonProjectConfig.Index? ProjectIndex { get; set; } = null;
+        public JsonProjectConfig.Index? ProjectConfig { get; set; } = null;
 
 
 
@@ -35,11 +35,8 @@ namespace RresourcepackStudio.Windows
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            foreach (var c in e.Text)
-            {
-                if (c is '\\' or '/' or ':' or '*' or '?' or '<' or '>' or '|' || char.IsControl(c))
-                    e.Handled = true; return;
-            }
+            if (!CharChecker.Check(e.Text))
+                e.Handled = true;
         }
 
         private async void Button_AddLang_Click(object sender, RoutedEventArgs e)
@@ -135,57 +132,7 @@ namespace RresourcepackStudio.Windows
 
         private async void Button_Done_Click(object sender, RoutedEventArgs e)
         {
-            bool canCreate = true;
-
-
-            if (textBox_ProjectName.Text == null)
-                canCreate = false;
-            else
-                foreach (var c in textBox_ProjectName.Text)
-                    if (c is '/' or '\\' or '<' or '>' or '|' or '*' or '?')
-                        canCreate = false;
-
-            if (string.IsNullOrEmpty(textBox_Path.Text))
-                canCreate = false;
-
-
-
-
-            if (canCreate)
-            {
-                ProjectPath = textBox_Path.Text;
-
-
-                var langList = new List<JsonProjectConfig.LanguageInfo>();
-
-                foreach (var item in listBox_Lang.Items)
-                    if (item is ListBoxItem lbItem)
-                        langList.Add((JsonProjectConfig.LanguageInfo)lbItem.Tag);
-
-                ProjectIndex = new JsonProjectConfig.Index
-                {
-                    Name = textBox_ProjectName.Text!,
-                    PackInfo = new JsonProjectConfig.PackInfo
-                    {
-                        BuildName = $"{textBox_ProjectName.Text}.zip",
-                        Description = textBox_Description.Text,
-                        Version = new JsonProjectConfig.VersionInfo
-                        {
-                            MinMain = (int)numBox_MinMain.Value,
-                            MinSub = (int)numBox_MinSub.Value,
-                            Neutral = (int)numBox_Neutral.Value,
-                            MaxMain = (int)numBox_MaxMain.Value,
-                            MaxSub = (int)numBox_MaxSub.Value
-                        },
-                        Language = (langList.Count > 0) ? langList.ToArray() : new JsonProjectConfig.LanguageInfo[] { }
-                    }
-                };
-
-
-                DialogResult = true;
-                this.Close();
-            }
-            else
+            if (!CharChecker.Check(textBox_ProjectName.Text) || !CharChecker.Check(textBox_Path.Text))
             {
                 await DialogManager.ShowDialogAsync(new ContentDialog
                 {
@@ -194,7 +141,41 @@ namespace RresourcepackStudio.Windows
                     PrimaryButtonText = "确定",
                     DefaultButton = ContentDialogButton.Primary
                 });
+                return;
             }
+
+
+            ProjectPath = textBox_Path.Text;
+
+
+            var langList = new List<JsonProjectConfig.LanguageInfo>();
+
+            foreach (var item in listBox_Lang.Items)
+                if (item is ListBoxItem lbItem)
+                    langList.Add((JsonProjectConfig.LanguageInfo)lbItem.Tag);
+
+            ProjectConfig = new JsonProjectConfig.Index
+            {
+                Name = textBox_ProjectName.Text!,
+                PackInfo = new JsonProjectConfig.PackInfo
+                {
+                    BuildName = $"{textBox_ProjectName.Text}.zip",
+                    Description = textBox_Description.Text,
+                    Version = new JsonProjectConfig.VersionInfo
+                    {
+                        MinMain = (int)numBox_MinMain.Value,
+                        MinSub = (int)numBox_MinSub.Value,
+                        Neutral = (int)numBox_Neutral.Value,
+                        MaxMain = (int)numBox_MaxMain.Value,
+                        MaxSub = (int)numBox_MaxSub.Value
+                    },
+                    Language = (langList.Count > 0) ? langList.ToArray() : new JsonProjectConfig.LanguageInfo[] { }
+                }
+            };
+
+
+            DialogResult = true;
+            this.Close();
         }
 
         private void Button_Broswer_Click(object sender, RoutedEventArgs e)
