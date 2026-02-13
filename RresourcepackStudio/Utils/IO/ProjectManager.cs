@@ -35,6 +35,10 @@ namespace RresourcepackStudio.Utils.IO
                     Message = $"项目 {window.ProjectIndex.Name} 成功创建！",
                     Type = NotificationType.Success
                 });
+
+                Globals.CurrentProject = window.ProjectIndex;
+                Globals.CurrentProjectDirectory = window.ProjectPath;
+                LoadProject();
 			}
 			catch (Exception ex)
 			{
