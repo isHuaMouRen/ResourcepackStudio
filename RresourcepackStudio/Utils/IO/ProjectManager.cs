@@ -86,7 +86,8 @@ namespace RresourcepackStudio.Utils.IO
                     throw new Exception("程序主窗口无效，这通常是内部代码问题。请反馈给开发者！");
 
 
-                window.LoadTreeView();
+                FileManager.LoadTreeView(window.treeView_Main);
+                window.button_NewFile.IsEnabled = false;window.button_NewFolder.IsEnabled = false;
                 window.SetUIEnabled(true);
                 window.UpdateMenuItem();
             }

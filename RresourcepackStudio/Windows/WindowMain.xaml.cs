@@ -101,78 +101,6 @@ namespace RresourcepackStudio.Windows
 
         }
 
-        //加载TreeView
-        public void LoadTreeView()
-        {
-            void AddItemFromFileInfo(JsonProjectConfig.FileInfo fileInfo, TreeViewItem root)
-            {
-                var item = new TreeViewItem
-                {
-                    Header = new StackPanel
-                    {
-                        Orientation = Orientation.Horizontal,
-                        Children =
-                        {
-                            fileInfo.Type==FileType.Folder?new IconFolder():new IconFile(),
-                            new TextBlock
-                            {
-                                Text=fileInfo.Name,
-                                Margin=new Thickness(5,0,0,0),
-                                VerticalAlignment=VerticalAlignment.Center
-                            }
-                        }
-                    },
-                    Tag = fileInfo
-                };
-
-                root.Items.Add(item);
-
-                if (fileInfo.Children != null && fileInfo.Children.Length > 0)
-                {
-                    foreach (var fileChild in fileInfo.Children)
-                    {
-                        AddItemFromFileInfo(fileChild, item);
-                    }
-                }
-            }
-
-            try
-            {
-                treeView_Main.Items.Clear();
-                button_NewFile.IsEnabled = false; button_NewFolder.IsEnabled = false;
-
-                var item = new TreeViewItem
-                {
-                    Header = new StackPanel
-                    {
-                        Orientation = Orientation.Horizontal,
-                        Children =
-                        {
-                            new IconApplication(),
-                            new TextBlock
-                            {
-                                Text=$"{Globals.CurrentProject!.Name}",
-                                Margin=new Thickness(5,0,0,0),
-                                VerticalAlignment=VerticalAlignment.Center
-                            }
-                        }
-                    }
-                };
-
-                treeView_Main.Items.Add(item);
-
-                //添加普通文件
-                if (Globals.CurrentProject.Files != null)
-                    foreach (var file in Globals.CurrentProject.Files!)
-                        AddItemFromFileInfo(file, item);
-
-            }
-            catch (Exception ex)
-            {
-                ErrorReportDialog.Show(ex);
-            }
-        }
-
         //创建文件
         private async void button_NewFile_Click(object sender, RoutedEventArgs e)
         {
@@ -199,71 +127,7 @@ namespace RresourcepackStudio.Windows
                 if (!isContinue)
                     return;
 
-                //无效名检测
-                if (!CharChecker.Check(textBox.Text))
-                {
-                    new NotificationManager().Show(new NotificationContent
-                    {
-                        Title = "文件无法创建",
-                        Message = "文件名包含了无效字符",
-                        Type = NotificationType.Error
-                    });
-                    return;
-                }
-
-
-                //同名检测
-                ItemCollection tempCollection;
-                if (fileInfo.Type == FileType.File)
-                    tempCollection = ((TreeViewItem)treeViewItem.Parent).Items;
-                else
-                    tempCollection = treeViewItem.Items;
-                foreach (TreeViewItem item in tempCollection)
-                {
-                    if (((JsonProjectConfig.FileInfo)item.Tag).Name == textBox.Text)
-                    {
-                        new NotificationManager().Show(new NotificationContent
-                        {
-                            Title = "文件无法创建",
-                            Message = "已有同名文件",
-                            Type = NotificationType.Error
-                        });
-                        return;
-                    }
-                }
-
-
-
-
-                var addItem = new TreeViewItem
-                {
-                    Header = new StackPanel
-                    {
-                        Orientation = Orientation.Horizontal,
-                        Children =
-                        {
-                            new IconFile(),
-                            new TextBlock
-                            {
-                                Text=textBox.Text,
-                                Margin=new Thickness(5,0,0,0),
-                                VerticalAlignment=VerticalAlignment.Center
-                            }
-                        }
-                    },
-                    Tag = new JsonProjectConfig.FileInfo
-                    {
-                        Name = textBox.Text,
-                        Type = FileType.File,
-                        Children = null
-                    }
-                };
-
-                if (fileInfo.Type == FileType.File)
-                    ((TreeViewItem)treeViewItem.Parent).Items.Add(addItem);
-                else
-                    treeViewItem.Items.Add(addItem);
-
+                FileManager.NewFile(textBox.Text, treeViewItem);
             }
             catch (Exception ex)
             {
@@ -297,70 +161,7 @@ namespace RresourcepackStudio.Windows
                 if (!isContinue)
                     return;
 
-                //无效名检测
-                if (!CharChecker.Check(textBox.Text))
-                {
-                    new NotificationManager().Show(new NotificationContent
-                    {
-                        Title = "文件夹无法创建",
-                        Message = "文件夹名包含了无效字符",
-                        Type = NotificationType.Error
-                    });
-                    return;
-                }
-
-
-                //同名检测
-                ItemCollection tempCollection;
-                if (fileInfo.Type == FileType.File)
-                    tempCollection = ((TreeViewItem)treeViewItem.Parent).Items;
-                else
-                    tempCollection = treeViewItem.Items;
-                foreach (TreeViewItem item in tempCollection)
-                {
-                    if (((JsonProjectConfig.FileInfo)item.Tag).Name == textBox.Text)
-                    {
-                        new NotificationManager().Show(new NotificationContent
-                        {
-                            Title = "文件夹无法创建",
-                            Message = "已有同名文件夹",
-                            Type = NotificationType.Error
-                        });
-                        return;
-                    }
-                }
-
-
-
-
-                var addItem = new TreeViewItem
-                {
-                    Header = new StackPanel
-                    {
-                        Orientation = Orientation.Horizontal,
-                        Children =
-                        {
-                            new IconFolder(),
-                            new TextBlock
-                            {
-                                Text=textBox.Text,
-                                Margin=new Thickness(5,0,0,0),
-                                VerticalAlignment=VerticalAlignment.Center
-                            }
-                        }
-                    },
-                    Tag = new JsonProjectConfig.FileInfo
-                    {
-                        Name = textBox.Text,
-                        Type = FileType.Folder,
-                        Children = null
-                    }
-                };
-
-                if (fileInfo.Type == FileType.File)
-                    ((TreeViewItem)treeViewItem.Parent).Items.Add(addItem);
-                else
-                    treeViewItem.Items.Add(addItem);
+                FileManager.NewFolder(textBox.Text, treeViewItem);
             }
             catch (Exception ex)
             {
