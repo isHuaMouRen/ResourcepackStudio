@@ -44,13 +44,13 @@ namespace ResourcepackStudio.Utils.UI
 
 
             //==========CUSTOM==========
-            void RecursionAddNode(string path, TreeViewItem rootNode)
+            void RecursionAddNode(string currentPath, TreeViewItem parentNode)
             {
-                foreach (var folder in Directory.GetDirectories(path))
+                foreach (var dirPath in Directory.GetDirectories(currentPath))
                 {
-                    string folderName = Path.GetFileName(folder);
+                    string folderName = Path.GetFileName(dirPath);
 
-                    var tvi = new TreeViewItem
+                    var folderItem = new TreeViewItem
                     {
                         Header = new StackPanel
                         {
@@ -60,46 +60,42 @@ namespace ResourcepackStudio.Utils.UI
                                 new IconFolder(),
                                 new TextBlock
                                 {
-                                    Text=folderName,
-                                    Margin=new Thickness(5,0,0,0),
-                                    VerticalAlignment=VerticalAlignment.Center
+                                    Text = folderName,
+                                    Margin = new Thickness(5, 0, 0, 0),
+                                    VerticalAlignment = VerticalAlignment.Center
                                 }
                             }
-                        }
+                        },
                     };
 
-                    rootNode.Items.Add(tvi);
+                    parentNode.Items.Add(folderItem);
 
-                    foreach (var chilFolder in Directory.GetDirectories(folder))
-                    {
-                        RecursionAddNode(chilFolder, tvi);
-                    }
-                        
-
+                    RecursionAddNode(dirPath, folderItem);
                 }
-                foreach (var file in Directory.GetFiles(path))
-                {
-                    string fileName = Path.GetFileName(file);
 
-                    var tvi = new TreeViewItem
+                foreach (var filePath in Directory.GetFiles(currentPath))
+                {
+                    string fileName = Path.GetFileName(filePath);
+
+                    var fileItem = new TreeViewItem
                     {
                         Header = new StackPanel
                         {
                             Orientation = Orientation.Horizontal,
                             Children =
-                            {
-                                new IconFile(),
-                                new TextBlock
-                                {
-                                    Text=fileName,
-                                    Margin=new Thickness(5,0,0,0),
-                                    VerticalAlignment=VerticalAlignment.Center
-                                }
-                            }
+                    {
+                        new IconFile(),
+                        new TextBlock
+                        {
+                            Text = fileName,
+                            Margin = new Thickness(5, 0, 0, 0),
+                            VerticalAlignment = VerticalAlignment.Center
+                        }
+                    }
                         }
                     };
 
-                    rootNode.Items.Add(tvi);
+                    parentNode.Items.Add(fileItem);
                 }
             }
 
