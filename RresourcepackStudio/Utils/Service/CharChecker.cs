@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace RresourcepackStudio.Utils.UI
+namespace ResourcepackStudio.Utils.UI
 {
     public static class CharChecker
     {

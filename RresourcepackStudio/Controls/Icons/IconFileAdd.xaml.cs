@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RresourcepackStudio.Controls.Icons
+namespace ResourcepackStudio.Controls.Icons
 {
     /// <summary>
     /// IconFileAdd.xaml 的交互逻辑

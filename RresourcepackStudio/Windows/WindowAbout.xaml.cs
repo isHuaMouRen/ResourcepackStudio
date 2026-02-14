@@ -1,4 +1,4 @@
-﻿using RresourcepackStudio.Classes;
+﻿using ResourcepackStudio.Classes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RresourcepackStudio.Windows
+namespace ResourcepackStudio.Windows
 {
     /// <summary>
     /// WindowAbout.xaml 的交互逻辑

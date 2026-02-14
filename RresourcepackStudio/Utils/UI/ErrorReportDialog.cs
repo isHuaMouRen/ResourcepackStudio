@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace RresourcepackStudio.Utils.UI
+namespace ResourcepackStudio.Utils.UI
 {
     public static class ErrorReportDialog
     {

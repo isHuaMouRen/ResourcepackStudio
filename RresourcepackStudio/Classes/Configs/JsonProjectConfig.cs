@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace RresourcepackStudio.Classes.Configs
+namespace ResourcepackStudio.Classes.Configs
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum FileType

@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="RresourcepackStudio.Controls.Icons.IconFolder"
+﻿<UserControl x:Class="ResourcepackStudio.Controls.Icons.IconFolder"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RresourcepackStudio.Controls.Icons"
+             xmlns:local="clr-namespace:ResourcepackStudio.Controls.Icons"
              mc:Ignorable="d">
     <Viewbox>
         <Canvas UseLayoutRounding="False" Width="24.0" Height="24.0">

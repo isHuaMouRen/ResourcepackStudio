@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace RresourcepackStudio.Utils.IO
+namespace ResourcepackStudio.Utils.IO
 {
     public static class JsonHelper
     {

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace RresourcepackStudio.Controls
+namespace ResourcepackStudio.Controls
 {
     // 第三方库引用
     // https://github.com/TwilightLemon/FluentScrollViewer

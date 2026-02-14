@@ -1,17 +1,17 @@
 ﻿using ModernWpf.Controls;
 using Notifications.Wpf;
-using RresourcepackStudio.Classes;
-using RresourcepackStudio.Classes.Configs;
-using RresourcepackStudio.Controls.Icons;
-using RresourcepackStudio.Utils.IO;
-using RresourcepackStudio.Utils.UI;
+using ResourcepackStudio.Classes;
+using ResourcepackStudio.Classes.Configs;
+using ResourcepackStudio.Controls.Icons;
+using ResourcepackStudio.Utils.IO;
+using ResourcepackStudio.Utils.UI;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 
-namespace RresourcepackStudio.Windows
+namespace ResourcepackStudio.Windows
 {
     /// <summary>
     /// WindowMain.xaml 的交互逻辑
@@ -28,7 +28,7 @@ namespace RresourcepackStudio.Windows
             Loaded += ((s, e) =>
             {
                 this.Title = $"Resourcepack Studio {Globals.Version}";
-
+                SetUserInterfaceEnabled(false);
 
                 //创建ContextMenu
                 treeViewItemContextMenu.Items.Add(new MenuItem
@@ -61,7 +61,7 @@ namespace RresourcepackStudio.Windows
 
         //文件
         private void MenuItem_New_Click(object sender, RoutedEventArgs e) => ProjectManager.CreateProjectEx();
-        private void MenuItem_Open_Click(object sender, RoutedEventArgs e) { }
+        private void MenuItem_Open_Click(object sender, RoutedEventArgs e) => ProjectManager.OpenProjectEx();
         private void MenuItem_Save_Click(object sender, RoutedEventArgs e) { }
         private void MenuItem_Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown(0);
 
@@ -85,6 +85,11 @@ namespace RresourcepackStudio.Windows
 
         #region UI操作
 
+        /// <summary>
+        /// Menu快捷键
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (Keyboard.Modifiers == ModifierKeys.Control)
@@ -101,6 +106,16 @@ namespace RresourcepackStudio.Windows
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// 设置UI界面是否启用
+        /// </summary>
+        /// <param name="enabled">启用?</param>
+        public void SetUserInterfaceEnabled(bool enabled)
+        {
+            grid_Main.IsEnabled = enabled;
+            grid_Main.Visibility = enabled ? Visibility.Visible : Visibility.Collapsed;
         }
 
         #region TreeView操作

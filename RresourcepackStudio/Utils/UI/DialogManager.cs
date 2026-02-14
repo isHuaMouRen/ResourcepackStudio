@@ -1,6 +1,6 @@
 ﻿using ModernWpf.Controls;
 
-namespace RresourcepackStudio.Utils.UI
+namespace ResourcepackStudio.Utils.UI
 {
     public static class DialogManager
     {

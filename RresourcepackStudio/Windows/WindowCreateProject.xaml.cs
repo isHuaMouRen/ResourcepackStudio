@@ -1,8 +1,8 @@
 ﻿using Microsoft.Win32;
 using ModernWpf.Controls;
 using Notifications.Wpf;
-using RresourcepackStudio.Classes.Configs;
-using RresourcepackStudio.Utils.UI;
+using ResourcepackStudio.Classes.Configs;
+using ResourcepackStudio.Utils.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RresourcepackStudio.Windows
+namespace ResourcepackStudio.Windows
 {
     /// <summary>
     /// WindowCreateProject.xaml 的交互逻辑

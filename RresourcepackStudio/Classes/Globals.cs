@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Reflection;
-using RresourcepackStudio.Classes.Configs;
+using ResourcepackStudio.Classes.Configs;
 
-namespace RresourcepackStudio.Classes
+namespace ResourcepackStudio.Classes
 {
     public static class Globals
     {

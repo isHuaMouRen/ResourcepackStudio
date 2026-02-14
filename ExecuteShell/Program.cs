@@ -20,7 +20,7 @@ namespace ExecuteShell
             {
                 string executePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
                 string binPath = $"{Path.Combine(executePath, "bin")}";
-                string exePath = $"{Path.Combine(binPath, "RresourcepackStudio.exe")}";
+                string exePath = $"{Path.Combine(binPath, "ResourcepackStudio.exe")}";
 
                 Process.Start(new ProcessStartInfo
                 {

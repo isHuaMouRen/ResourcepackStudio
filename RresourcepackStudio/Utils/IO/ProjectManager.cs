@@ -1,11 +1,16 @@
-﻿using RresourcepackStudio.Classes.Configs;
+﻿using ResourcepackStudio.Classes.Configs;
 using System.IO;
-using RresourcepackStudio.Utils.UI;
-using RresourcepackStudio.Windows;
+using ResourcepackStudio.Utils.UI;
+using ResourcepackStudio.Windows;
 using Notifications.Wpf;
 using ModernWpf.Controls;
+using ResourcepackStudio.Classes;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.Win32;
+using System.Windows;
+using System.Windows.Controls;
 
-namespace RresourcepackStudio.Utils.IO
+namespace ResourcepackStudio.Utils.IO
 {
     public static class ProjectManager
     {
@@ -104,6 +109,102 @@ namespace RresourcepackStudio.Utils.IO
             catch (Exception ex)
             {
                 ErrorReportDialog.Show(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// 加载项目到全局当前项目
+        /// </summary>
+        /// <param name="projectPath">项目文件路径</param>
+        /// <returns>true成功，false失败</returns>
+        public static bool OpenProject(string projectPath)
+        {
+            try
+            {
+                var projectInfo = JsonHelper.ReadJson<JsonProjectConfig.Index>(projectPath);
+
+                Globals.CurrentProject = projectInfo;
+                Globals.CurrentProjectDirectory = Path.GetDirectoryName(projectPath);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+                return false;
+            }
+        }
+
+        public static void OpenProjectEx()
+        {
+            try
+            {
+                var mainWindow = (WindowMain)Application.Current.MainWindow;
+
+
+
+                var dialog = new OpenFileDialog
+                {
+                    Filter = "Resourcepack Studio Project|*.rpsp",
+                    Title = "选择一个有效的项目文件",
+                    Multiselect = false
+                };
+                if (dialog.ShowDialog() != true)
+                    return;
+
+
+                var resultOpen = OpenProject(dialog.FileName);
+                if (!resultOpen)
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "打开项目",
+                        Message = $"无法打开项目 \"{dialog.FileName}\"",
+                        Type = NotificationType.Error
+                    });
+
+
+                var resultLoad = LoadProject();
+                if (!resultLoad)
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "加载项目",
+                        Message = $"无法加载项目 \"{Globals.CurrentProject!.Name}\"",
+                        Type = NotificationType.Error
+                    });
+
+
+                if (resultLoad && resultOpen)
+                {
+                    mainWindow.SetUserInterfaceEnabled(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// 从全局当前项目加载项目
+        /// </summary>
+        /// <returns>true成功，false失败</returns>
+        public static bool LoadProject()
+        {
+            try
+            {
+                TreeViewController.Clear();
+                TreeViewController.AddRootNode(Globals.CurrentProject!);
+                TreeViewController.LoadTree(Path.Combine(Globals.CurrentProjectDirectory!, "files"), (TreeViewItem)TreeViewController.TreeViewMain.Items[0]);
+
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+                return false;
             }
         }
     }
