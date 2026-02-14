@@ -114,7 +114,7 @@ namespace ResourcepackStudio.Utils.IO
 
 
         /// <summary>
-        /// 加载项目到全局当前项目
+        /// 打开项目到全局当前项目
         /// </summary>
         /// <param name="projectPath">项目文件路径</param>
         /// <returns>true成功，false失败</returns>
@@ -205,6 +205,54 @@ namespace ResourcepackStudio.Utils.IO
             {
                 ErrorReportDialog.Show(ex);
                 return false;
+            }
+        }
+
+
+        /// <summary>
+        /// 保存项目
+        /// </summary>
+        /// <returns>ture成功，false失败</returns>
+        public static bool SaveProject()
+        {
+            try
+            {
+                string projectFile = Path.Combine(Globals.CurrentProjectDirectory!, $"{Globals.CurrentProject!.Name}.rpsp");
+                JsonHelper.WriteJson(projectFile, Globals.CurrentProject);
+
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+                return false;
+            }
+        }
+
+        public static void SaveProjectEx()
+        {
+            try
+            {
+                var result = SaveProject();
+                if (result)
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "保存项目",
+                        Message = $"项目 \"{Globals.CurrentProject!.Name}\" 成功保存至 \"{Path.Combine(Globals.CurrentProjectDirectory!, $"{Globals.CurrentProject.Name}.rpsp")}\"",
+                        Type = NotificationType.Success
+                    });
+                else
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "保存项目",
+                        Message = $"无法保存项目 \"{Globals.CurrentProject!.Name}\"",
+                        Type = NotificationType.Error
+                    });
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
             }
         }
     }
