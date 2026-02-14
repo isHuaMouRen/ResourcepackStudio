@@ -105,6 +105,19 @@ namespace ResourcepackStudio.Utils.IO
                         Message = $"在创建项目时出现了错误，这可能是内部错误，如果确定不是您引发的请反馈至开发者",
                         Type = NotificationType.Error
                     });
+
+
+
+                if (result)
+                {
+                    var mainWindow = (WindowMain)Application.Current.MainWindow;
+
+                    OpenProject(Path.Combine(window.ProjectPath!, $"{window.ProjectConfig.Name}.rpsp"));
+                    LoadProject();
+
+                    mainWindow.UpdateMenuItem();
+                    mainWindow.SetUserInterfaceEnabled(true);
+                }
             }
             catch (Exception ex)
             {
