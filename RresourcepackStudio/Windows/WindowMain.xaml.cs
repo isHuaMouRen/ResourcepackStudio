@@ -5,6 +5,7 @@ using ResourcepackStudio.Classes.Configs;
 using ResourcepackStudio.Controls.Icons;
 using ResourcepackStudio.Utils.IO;
 using ResourcepackStudio.Utils.UI;
+using System.DirectoryServices.ActiveDirectory;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,6 +30,9 @@ namespace ResourcepackStudio.Windows
             {
                 this.Title = $"Resourcepack Studio {Globals.Version}";
                 SetUserInterfaceEnabled(false);
+                UpdateMenuItem();
+
+
 
                 //创建ContextMenu
                 treeViewItemContextMenu.Items.Add(new MenuItem
@@ -117,6 +121,21 @@ namespace ResourcepackStudio.Windows
             grid_Main.IsEnabled = enabled;
             grid_Main.Visibility = enabled ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        /// <summary>
+        /// 更新MenuItem可用状态，比如未加载项目时无法使用保存
+        /// </summary>
+        public void UpdateMenuItem()
+        {
+            var controls = new UIElement[] { menuItem_Save };
+
+            foreach (var control in controls)
+                control.IsEnabled = false;
+
+            if (Globals.CurrentProject != null && Globals.CurrentProjectDirectory != null) 
+                menuItem_Save.IsEnabled = true;
+        }
+
 
         #region TreeView操作
 

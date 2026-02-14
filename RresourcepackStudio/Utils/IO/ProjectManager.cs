@@ -143,7 +143,7 @@ namespace ResourcepackStudio.Utils.IO
                 var mainWindow = (WindowMain)Application.Current.MainWindow;
 
 
-
+                //选择文件
                 var dialog = new OpenFileDialog
                 {
                     Filter = "Resourcepack Studio Project|*.rpsp",
@@ -153,7 +153,7 @@ namespace ResourcepackStudio.Utils.IO
                 if (dialog.ShowDialog() != true)
                     return;
 
-
+                //读到全局类
                 var resultOpen = OpenProject(dialog.FileName);
                 if (!resultOpen)
                     new NotificationManager().Show(new NotificationContent
@@ -163,7 +163,7 @@ namespace ResourcepackStudio.Utils.IO
                         Type = NotificationType.Error
                     });
 
-
+                //加载
                 var resultLoad = LoadProject();
                 if (!resultLoad)
                     new NotificationManager().Show(new NotificationContent
@@ -174,9 +174,11 @@ namespace ResourcepackStudio.Utils.IO
                     });
 
 
+                //更新主窗口
                 if (resultLoad && resultOpen)
                 {
                     mainWindow.SetUserInterfaceEnabled(true);
+                    mainWindow.UpdateMenuItem();
                 }
             }
             catch (Exception ex)
