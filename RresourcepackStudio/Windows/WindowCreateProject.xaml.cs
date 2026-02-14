@@ -132,7 +132,43 @@ namespace RresourcepackStudio.Windows
 
         private async void Button_Done_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (!CharChecker.Check(textBox_ProjectName.Text) || string.IsNullOrEmpty(textBox_Path.Text) ||
+                double.IsNaN(numBox_MaxMain.Value) || double.IsNaN(numBox_MaxSub.Value) || double.IsNaN(numBox_MinMain.Value) || double.IsNaN(numBox_MinSub.Value) || double.IsNaN(numBox_Neutral.Value)) 
+            {
+                new NotificationManager().Show(new NotificationContent
+                {
+                    Title = "无法创建项目",
+                    Message = "您填写的项有误或不合法，请检查后重试",
+                    Type = NotificationType.Error
+                });
+                return;
+            }
+
+            var langList = new List<JsonProjectConfig.LanguageInfo>();
+            foreach (ListBoxItem item in listBox_Lang.Items)
+                langList.Add((JsonProjectConfig.LanguageInfo)item.Tag);
+
+            var projectIndex = new JsonProjectConfig.Index
+            {
+                Name = textBox_ProjectName.Text,
+                PackInfo = new JsonProjectConfig.PackInfo
+                {
+                    BuildName = textBox_ProjectName.Text + ".zip",
+                    Description = textBox_Description.Text,
+                    Version = new JsonProjectConfig.VersionInfo
+                    {
+                        MaxMain = (int)numBox_MaxMain.Value,
+                        MaxSub = (int)numBox_MaxSub.Value,
+                        MinMain = (int)numBox_MinMain.Value,
+                        MinSub = (int)numBox_MinSub.Value,
+                        Neutral = (int)numBox_Neutral.Value,
+                    },
+                    Language = langList.ToArray()
+                }
+            };
+
+            ProjectConfig = projectIndex;
+            ProjectPath = textBox_Path.Text;
 
 
             DialogResult = true;

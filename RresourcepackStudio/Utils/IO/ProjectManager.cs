@@ -3,16 +3,108 @@ using System.IO;
 using RresourcepackStudio.Utils.UI;
 using RresourcepackStudio.Windows;
 using Notifications.Wpf;
-using Microsoft.Win32;
-using RresourcepackStudio.Classes;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+using ModernWpf.Controls;
 
 namespace RresourcepackStudio.Utils.IO
 {
     public static class ProjectManager
     {
-        
+        /// <summary>
+        /// 创建项目，无任何保护，直接操作
+        /// </summary>
+        /// <param name="path">项目路径</param>
+        /// <param name="projectIndex">项目信息</param>
+        /// <returns>true为成功，false为失败</returns>
+        public static bool CreateProject(string path, JsonProjectConfig.Index projectIndex)
+        {
+            try
+            {
+                string projectFile = Path.Combine(path, $"{projectIndex.Name}.rpsp");
+
+                JsonHelper.WriteJson(projectFile, projectIndex);
+
+                //创建基础目录结构
+                /*
+                 assets
+                    minecraft
+                        lang
+                        models
+                            block
+                            item
+                        texts
+                        textures
+                 */
+
+                string filesPath = Path.Combine(path, "files");
+                string[] files = {
+                    Path.Combine(filesPath,"assets"),
+                    Path.Combine(filesPath,"assets","minecraft"),
+                    Path.Combine(filesPath,"assets","minecraft","lang"),
+                    Path.Combine(filesPath,"assets","minecraft","models"),
+                    Path.Combine(filesPath,"assets","minecraft","models","block"),
+                    Path.Combine(filesPath,"assets","minecraft","models","item"),
+                    Path.Combine(filesPath,"assets","minecraft","texts"),
+                    Path.Combine(filesPath,"assets","minecraft","textures")
+                };
+
+                foreach (var file in files)
+                    Directory.CreateDirectory(file);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+                return false;
+            }
+        }
+
+        public static async void CreateProjectEx()
+        {
+            try
+            {
+                var window = new WindowCreateProject();
+                if (window.ShowDialog() != true)
+                    return;
+
+                if (File.Exists(Path.Combine(window.ProjectPath!, $"{window.ProjectConfig!.Name}.rpsp"))) 
+                {
+                    bool isReturn = false;
+                    await DialogManager.ShowDialogAsync(new ContentDialog
+                    {
+                        Title = "发现重名文件",
+                        Content = $"我们在 \"{window.ProjectPath}\" 处发现了与 \"{window.ProjectConfig.Name}.rpsp\" 同名的文件",
+                        PrimaryButtonText = "覆盖",
+                        CloseButtonText = "取消",
+                        DefaultButton = ContentDialogButton.Primary
+                    }, null, (() => isReturn = true), (() => isReturn = true));
+
+                    if (isReturn)
+                        return;
+                }
+
+
+
+                var result = CreateProject(window.ProjectPath!, window.ProjectConfig!);
+                if (result)
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "创建项目",
+                        Message = $"成功在 \"{window.ProjectPath}\" 处创建项目 \"{window.ProjectConfig!.Name}\"",
+                        Type = NotificationType.Success
+                    });
+                else
+                    new NotificationManager().Show(new NotificationContent
+                    {
+                        Title = "创建项目",
+                        Message = $"在创建项目时出现了错误，这可能是内部错误，如果确定不是您引发的请反馈至开发者",
+                        Type = NotificationType.Error
+                    });
+            }
+            catch (Exception ex)
+            {
+                ErrorReportDialog.Show(ex);
+            }
+        }
     }
 }
