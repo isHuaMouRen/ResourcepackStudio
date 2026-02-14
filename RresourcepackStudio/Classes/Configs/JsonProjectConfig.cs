@@ -68,7 +68,6 @@ namespace RresourcepackStudio.Classes.Configs
 
             [JsonProperty("region")]
             public string Region { get; set; } = "中国大陆";
-
         }
     }
 }

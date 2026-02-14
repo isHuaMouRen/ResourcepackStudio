@@ -132,46 +132,7 @@ namespace RresourcepackStudio.Windows
 
         private async void Button_Done_Click(object sender, RoutedEventArgs e)
         {
-            if (!CharChecker.Check(textBox_ProjectName.Text) || !CharChecker.Check(textBox_Path.Text))
-            {
-                await DialogManager.ShowDialogAsync(new ContentDialog
-                {
-                    Title = "无法创建",
-                    Content = "内容校验不通过，请检查是否按照要求填写内容",
-                    PrimaryButtonText = "确定",
-                    DefaultButton = ContentDialogButton.Primary
-                });
-                return;
-            }
-
-
-            ProjectPath = textBox_Path.Text;
-
-
-            var langList = new List<JsonProjectConfig.LanguageInfo>();
-
-            foreach (var item in listBox_Lang.Items)
-                if (item is ListBoxItem lbItem)
-                    langList.Add((JsonProjectConfig.LanguageInfo)lbItem.Tag);
-
-            ProjectConfig = new JsonProjectConfig.Index
-            {
-                Name = textBox_ProjectName.Text!,
-                PackInfo = new JsonProjectConfig.PackInfo
-                {
-                    BuildName = $"{textBox_ProjectName.Text}.zip",
-                    Description = textBox_Description.Text,
-                    Version = new JsonProjectConfig.VersionInfo
-                    {
-                        MinMain = (int)numBox_MinMain.Value,
-                        MinSub = (int)numBox_MinSub.Value,
-                        Neutral = (int)numBox_Neutral.Value,
-                        MaxMain = (int)numBox_MaxMain.Value,
-                        MaxSub = (int)numBox_MaxSub.Value
-                    },
-                    Language = (langList.Count > 0) ? langList.ToArray() : new JsonProjectConfig.LanguageInfo[] { }
-                }
-            };
+            
 
 
             DialogResult = true;

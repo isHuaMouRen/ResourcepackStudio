@@ -28,9 +28,6 @@ namespace RresourcepackStudio.Windows
             Loaded += ((s, e) =>
             {
                 this.Title = $"Resourcepack Studio {Globals.Version}";
-                SetUIEnabled(false);
-                UpdateMenuItem();
-
 
 
                 //创建ContextMenu
@@ -63,9 +60,9 @@ namespace RresourcepackStudio.Windows
         #region MenuItem 事件
 
         //文件
-        private void MenuItem_New_Click(object sender, RoutedEventArgs e) => ProjectManager.CreateProject();
-        private void MenuItem_Open_Click(object sender, RoutedEventArgs e) => ProjectManager.OpenProject();
-        private void MenuItem_Save_Click(object sender, RoutedEventArgs e) => ProjectManager.SaveProject();
+        private void MenuItem_New_Click(object sender, RoutedEventArgs e) { }
+        private void MenuItem_Open_Click(object sender, RoutedEventArgs e) { }
+        private void MenuItem_Save_Click(object sender, RoutedEventArgs e) { }
         private void MenuItem_Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown(0);
 
         //帮助
@@ -73,8 +70,8 @@ namespace RresourcepackStudio.Windows
 
 
         //右键菜单
-        private void MenuItem_CM_NewFile_Click(object sender, RoutedEventArgs e) => button_NewFile_Click(button_NewFile, null!);
-        private void MenuItem_CM_NewFolder_Click(object sender, RoutedEventArgs e) => button_NewFolder_Click(button_NewFolder, null!);
+        private void MenuItem_CM_NewFile_Click(object sender, RoutedEventArgs e) { }
+        private void MenuItem_CM_NewFolder_Click(object sender, RoutedEventArgs e) { }
         private async void MenuItem_CM_Rename_Click(object sender, RoutedEventArgs e)
         {
             
@@ -87,24 +84,6 @@ namespace RresourcepackStudio.Windows
         #endregion
 
         #region UI操作
-
-        public void SetUIEnabled(bool enabled)
-        {
-            grid_Main.IsEnabled = enabled;
-            grid_Main.Visibility = enabled ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        public void UpdateMenuItem()
-        {
-            if (Globals.CurrentProject == null)
-            {
-                menuItem_Save.IsEnabled = false;
-            }
-            else
-            {
-                menuItem_Save.IsEnabled = true;
-            }
-        }
 
         private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -126,23 +105,6 @@ namespace RresourcepackStudio.Windows
 
         #region TreeView操作
 
-        //Treeview选择项更改
-        private void treeView_Main_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            
-        }
-
-        //创建文件
-        private async void button_NewFile_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        //创建文件夹
-        private async void button_NewFolder_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
 
         #endregion
 
