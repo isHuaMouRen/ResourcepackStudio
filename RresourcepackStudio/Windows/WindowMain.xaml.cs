@@ -20,6 +20,7 @@ namespace ResourcepackStudio.Windows
     public partial class WindowMain : Window
     {
         public ContextMenu treeViewItemContextMenu = new ContextMenu();
+        public ContextMenu treeViewRootItemContextMenu = new ContextMenu();
 
 
 
@@ -46,6 +47,17 @@ namespace ResourcepackStudio.Windows
                 });
                 treeViewItemContextMenu.Items.Add(CreateMenuItem("重命名", MenuItem_CM_Rename_Click));
                 treeViewItemContextMenu.Items.Add(CreateMenuItem("删除", MenuItem_CM_Delete_Click));
+
+                //创建RootItemMenu
+                treeViewRootItemContextMenu.Items.Add(new MenuItem
+                {
+                    Header = "新建",
+                    Items =
+                    {
+                        CreateMenuItem("新建文件",MenuItem_CM_NewFile_Click),
+                        CreateMenuItem("新建文件夹",MenuItem_CM_NewFolder_Click)
+                    }
+                });
             });
         }
 
@@ -74,7 +86,7 @@ namespace ResourcepackStudio.Windows
 
 
         //右键菜单
-        private void MenuItem_CM_NewFile_Click(object sender, RoutedEventArgs e) { }
+        private void MenuItem_CM_NewFile_Click(object sender, RoutedEventArgs e) => TreeViewController.NewFileEx();
         private void MenuItem_CM_NewFolder_Click(object sender, RoutedEventArgs e) { }
         private async void MenuItem_CM_Rename_Click(object sender, RoutedEventArgs e)
         {

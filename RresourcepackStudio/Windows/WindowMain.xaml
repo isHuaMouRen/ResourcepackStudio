@@ -43,14 +43,6 @@
             <!--文件管理器-->
             <Grid Grid.Column="0">
                 <TextBlock Text="文件管理器" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" FontSize="15"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5">
-                    <Button x:Name="button_NewFile" BorderBrush="{x:Null}">
-                        <icons:IconFileAdd Width="20" Height="20"/>
-                    </Button>
-                    <Button x:Name="button_NewFolder" BorderBrush="{x:Null}">
-                        <icons:IconFolderAdd Width="20" Height="20"/>
-                    </Button>
-                </StackPanel>
                 
                 <TreeView x:Name="treeView_Main" Margin="0,40,0,0"/>
             </Grid>
